@@ -25,7 +25,7 @@ public class TestController {
         User user = userService.selectOne("lhd");
         System.out.println(user);
         if(user != null)
-            return Result.succ(200,"查询成功",user);
+            return Result.succ(user);
         else
             return Result.fail("查询失败");
     }

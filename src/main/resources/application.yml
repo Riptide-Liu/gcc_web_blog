@@ -1,0 +1,23 @@
+# 应用名称
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/gcc_web_blog?serverTimezone=Asia/Shanghai&useSSL=true&characterEncoding=UTF-8
+    username: root
+    password: 123456
+  application:
+    name: blog
+mybatis:
+  type-aliases-package: com.web.blog.pojo
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+# 应用服务 WEB 访问端口
+server:
+  port:
+    8080
+
+
+
+
+

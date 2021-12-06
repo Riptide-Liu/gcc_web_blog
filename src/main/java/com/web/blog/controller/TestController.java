@@ -20,13 +20,5 @@ public class TestController {
         return "第一个接口";
     }
 
-    @GetMapping("/selectOne")
-    public Result selectOneUser() {
-        User user = userService.selectOne("lhd");
-        System.out.println(user);
-        if(user != null)
-            return Result.succ(user);
-        else
-            return Result.fail("查询失败");
-    }
+
 }

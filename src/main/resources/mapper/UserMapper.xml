@@ -3,7 +3,21 @@
 <mapper namespace="com.web.blog.mapper.UserMapper">
 
     <select id="selectOne" resultType="com.web.blog.pojo.User">
-        SELECT * FROM gcc_web_blog.user where username = #{username};
+        SELECT * FROM gcc_web_blog.user where username = #{username} and password = #{password};
     </select>
+
+    <insert id="insertUser">
+        insert into gcc_web_blog.user
+            (username, password, nickname)
+        values
+            (#{username}, #{password}, #{nickname});
+    </insert>
+
+    <update id="updatePassword">
+        update gcc_web_blog.user
+        set password = #{password}
+        where
+            id = #{id};
+    </update>
 
 </mapper>

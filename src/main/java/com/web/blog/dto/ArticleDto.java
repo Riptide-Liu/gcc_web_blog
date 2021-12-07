@@ -1,9 +1,9 @@
-package com.web.blog.pojo;
+package com.web.blog.dto;
 
 import java.io.Serializable;
 import java.util.Date;
 
-public class Article implements Serializable {
+public class ArticleDto implements Serializable {
     private Integer id;
     private String title;
     private String content;
@@ -12,7 +12,7 @@ public class Article implements Serializable {
     private Date createTime;
     private Date updateTime;
 
-    public Article(Integer id, String title, String content, Integer userID, Integer topicID, Date createTime, Date updateTime) {
+    public ArticleDto(Integer id, String title, String content, Integer userID, Integer topicID, Date createTime, Date updateTime) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -76,5 +76,20 @@ public class Article implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    // debug
+
+    @Override
+    public String toString() {
+        return "ArticleDto{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", userID=" + userID +
+                ", topicID=" + topicID +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                '}';
     }
 }

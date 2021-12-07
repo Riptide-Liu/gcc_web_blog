@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User selectOne(String username, String password) {
         User user = userMapper.selectOne(username,password);
-        return user;
+        return user.getEnable() == 0 ? null : user;
     }
 
     @Override
@@ -33,6 +33,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public int updatePassword(Integer id, String password) {
         int result = userMapper.updatePassword(id,password);
+        return result;
+    }
+
+    @Override
+    public int disableUser(Integer id) {
+        int result = userMapper.disableUser(id);
+        return result;
+    }
+
+    @Override
+    public int enableUser(Integer id) {
+        int result = userMapper.enableUser(id);
         return result;
     }
 }

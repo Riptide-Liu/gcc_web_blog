@@ -15,4 +15,8 @@ public interface UserService {
     //修改密码
     int updatePassword(@Param("id") Integer id
             , @Param("password") String password);
+    //禁用
+    int disableUser(@Param("id") Integer id);
+    //启用
+    int enableUser(@Param("id") Integer id);
 }

@@ -20,4 +20,17 @@
             id = #{id};
     </update>
 
+    <update id="disableUser">
+        update gcc_web_blog.user
+        set enable = 0
+        where
+            id = #{id};
+    </update>
+
+    <update id="enableUser">
+        update gcc_web_blog.user
+        set enable = 1
+        where
+            id = #{id};
+    </update>
 </mapper>

@@ -25,7 +25,7 @@ public class UserController {
         if(user != null)
             return Result.succ(200,"登录成功",user);
         else
-            return Result.fail("登录失败");
+            return Result.fail("登录失败!","密码错误或账号已被封禁！");
     }
     @PostMapping("/register")
     public Result userRegister(@RequestParam(value = "username", required = true) String username

@@ -5,8 +5,10 @@ CREATE TABLE `user` (
   `username` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   `password` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   `nickname` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `level` int(1) NOT NULL DEFAULT '1',
+  `enable` int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
 ```
 # article
 ```sql

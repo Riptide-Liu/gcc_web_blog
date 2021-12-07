@@ -2,6 +2,7 @@ package com.web.blog.controller;
 
 import com.web.blog.common.Result;
 import com.web.blog.dto.UserDto;
+import com.web.blog.mapper.CategoryMapper;
 import com.web.blog.pojo.User;
 import com.web.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin //所有域名均可访问该类下所有接口
 public class UserController {
-    @Autowired
+
     private UserService userService;
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
     @PostMapping("/login")
     public Result selectOneUser(@RequestParam(value = "username", required = true) String username
                                 ,@RequestParam(value = "password", required = true) String password) {

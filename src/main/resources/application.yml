@@ -8,9 +8,9 @@ spring:
       cache: false    #页面不加载缓存，修改即时生效
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/gcc_web_blog?serverTimezone=Asia/Shanghai&useSSL=true&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:4485/gcc_web_blog?serverTimezone=Asia/Shanghai&useSSL=true&characterEncoding=UTF-8
     username: root
-    password: 123456
+    password: localcall_mys01
   application:
     name: blog
 mybatis:

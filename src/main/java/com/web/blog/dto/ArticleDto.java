@@ -12,6 +12,10 @@ public class ArticleDto implements Serializable {
     private Date createTime;
     private Date updateTime;
 
+    public ArticleDto(Integer id) {
+        this.id = id;
+    }
+
     public ArticleDto(Integer id, String title, String content, Integer userID, Integer topicID, Date createTime, Date updateTime) {
         this.id = id;
         this.title = title;

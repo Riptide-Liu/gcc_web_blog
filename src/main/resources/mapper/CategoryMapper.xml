@@ -5,7 +5,7 @@
 
     <insert id="insertCategory">
         insert into gcc_web_blog.category
-            (topic, desc)
+            (topic, t_desc)
         values
             (#{topic}, #{desc});
     </insert>
@@ -13,7 +13,7 @@
     <update id="updateCategory">
         update gcc_web_blog.category
         set topic = #{topic},
-            desc = #{desc}
+            t_desc = #{desc}
         where
             id = #{id};
     </update>

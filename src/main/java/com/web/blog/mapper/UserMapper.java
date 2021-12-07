@@ -14,7 +14,8 @@ public interface UserMapper {
     //注册
     int insertUser(@Param("username") String username
             , @Param("password") String password
-            , @Param("nickname") String nickname);
+            , @Param("nickname") String nickname
+            , @Param("email") String email);
     //修改密码
     int updatePassword(@Param("id") Integer id
             , @Param("password") String password);

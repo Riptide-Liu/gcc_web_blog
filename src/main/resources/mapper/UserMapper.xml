@@ -8,9 +8,9 @@
 
     <insert id="insertUser">
         insert into gcc_web_blog.user
-            (username, password, nickname)
+            (username, password, nickname, email)
         values
-            (#{username}, #{password}, #{nickname});
+            (#{username}, #{password}, #{nickname}, #{email});
     </insert>
 
     <update id="updatePassword">

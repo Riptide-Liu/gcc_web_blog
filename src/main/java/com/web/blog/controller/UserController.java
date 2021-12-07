@@ -28,7 +28,7 @@ public class UserController {
     }
     @PostMapping("/register")
     public Result userRegister(@RequestBody UserDto userDto) {
-        int result = userService.insertUser(userDto.getUsername(),userDto.getPassword(),userDto.getNickname());
+        int result = userService.insertUser(userDto.getUsername(),userDto.getPassword(),userDto.getNickname(),userDto.getEmail());
         return result == 1 ?  Result.succ(200,"注册成功",result):Result.fail("注册失败",result);
     }
     @PostMapping("/changePassword")

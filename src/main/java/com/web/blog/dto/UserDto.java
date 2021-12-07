@@ -7,16 +7,25 @@ public class UserDto  implements Serializable {
     private String password;
     private String nickname;
     private Integer id;
+    private String email;
 
 
     public UserDto() {
     }
 
-    public UserDto(String username, String password, String nickname, Integer id) {
-        this.username = username;
-        this.password = password;
-        this.nickname = nickname;
-        this.id = id;
+//    public UserDto(String username, String password, String nickname, Integer id) {
+//        this.username = username;
+//        this.password = password;
+//        this.nickname = nickname;
+//        this.id = id;
+//    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Integer getId() {

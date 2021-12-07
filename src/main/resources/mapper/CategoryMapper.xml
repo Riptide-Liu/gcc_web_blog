@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.blog.mapper.CategoryMapper">
+
+
+    <insert id="insertCategory">
+        insert into gcc_web_blog.category
+            (topic, desc)
+        values
+            (#{topic}, #{desc});
+    </insert>
+
+    <update id="updateCategory">
+        update gcc_web_blog.category
+        set topic = #{topic},
+            desc = #{desc}
+        where
+            id = #{id};
+    </update>
+
+    <delete id="deleteCategory">
+        delete from
+        gcc_web_blog.category
+        where id = #{id};
+    </delete>
+
+    <select id="selectCategory" resultType="com.web.blog.pojo.Category">
+        SELECT * FROM gcc_web_blog.category;
+    </select>
+</mapper>

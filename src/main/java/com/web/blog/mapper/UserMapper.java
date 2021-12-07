@@ -11,7 +11,6 @@ public interface UserMapper {
     //登录
     User selectOne(@Param("username") String username
             , @Param("password") String password);
-
     //注册
     int insertUser(@Param("username") String username
             , @Param("password") String password

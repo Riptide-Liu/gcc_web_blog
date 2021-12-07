@@ -1,5 +1,6 @@
 package com.web.blog.service.impl;
 
+import com.web.blog.mapper.CategoryMapper;
 import com.web.blog.mapper.UserMapper;
 import com.web.blog.pojo.User;
 import com.web.blog.service.UserService;
@@ -10,8 +11,12 @@ import java.io.Serializable;
 
 @Service
 public class UserServiceImpl implements UserService {
-    @Autowired
+
     private UserMapper userMapper;
+    @Autowired
+    public void setDdDataMapper(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
 
     @Override
     public User selectOne(String username, String password) {

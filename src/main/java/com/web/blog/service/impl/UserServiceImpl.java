@@ -21,7 +21,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User selectOne(String username, String password) {
         User user = userMapper.selectOne(username,password);
-        return user.getEnable() == 0 ? null : user;
+        if(user != null)
+            return user.getEnable() == 0 ? null : user;
+        else
+            return null;
     }
 
     @Override

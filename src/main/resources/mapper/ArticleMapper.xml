@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.blog.mapper.ArticleMapper">
+
+    <insert id="publish">
+        insert into gcc_web_blog.article
+            (title, content, userID, topicID, createTime, updateTime)
+        values
+            (#{title}, #{content}, #{userID}, #{topicID}, now(), now());
+    </insert>
+
+    <update id="alterArticle">
+        update gcc_web_blog.article
+        set content = #{content}, updateTime = now()
+        where id = #{id};
+    </update>
+
+    <delete id="deleteArticle">
+        delete from gcc_web_blog.article
+        where id = #{id}
+    </delete>
+
+    <select id="getArticle" resultType="com.web.blog.pojo.Article">
+        select * from gcc_web_blog.article
+        where id = #{id};
+    </select>
+</mapper>

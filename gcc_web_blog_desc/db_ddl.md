@@ -13,14 +13,15 @@ CREATE TABLE `user` (
 # article
 ```sql
 CREATE TABLE `article` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(45) COLLATE utf8_bin NOT NULL,
-  `cotent` text COLLATE utf8_bin NOT NULL,
-  `userID` int(11) NOT NULL,
-  `topicID` int(11) DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `content` text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `userID` int NOT NULL,
+  `topicID` int DEFAULT NULL,
   `createTime` datetime DEFAULT NULL,
+  `updateTime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin
 ```
 # category
 ```sql

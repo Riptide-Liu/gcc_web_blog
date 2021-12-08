@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
+import java.util.List;
 
 @Mapper
 @Repository
@@ -25,4 +25,7 @@ public interface ArticleMapper {
 
     // 查看
     Article getArticle(@Param("id") Integer id);
+
+    // 获取文章列表
+    List<Article> getArticleList();
 }

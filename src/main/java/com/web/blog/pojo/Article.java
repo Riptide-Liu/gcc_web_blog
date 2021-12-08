@@ -1,8 +1,13 @@
 package com.web.blog.pojo;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 import java.util.Date;
 
+@AllArgsConstructor
+@NoArgsConstructor
 public class Article implements Serializable {
     private Integer id;
     private String title;
@@ -11,16 +16,6 @@ public class Article implements Serializable {
     private Integer topicID;
     private Date createTime;
     private Date updateTime;
-
-    public Article(Integer id, String title, String content, Integer userID, Integer topicID, Date createTime, Date updateTime) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.userID = userID;
-        this.topicID = topicID;
-        this.createTime = createTime;
-        this.updateTime = updateTime;
-    }
 
     public Integer getId() {
         return id;

@@ -1,9 +1,11 @@
 package com.web.blog.service;
 
+import com.web.blog.dto.ArticlePreviewDto;
 import com.web.blog.pojo.Article;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public interface ArticleService {
 
@@ -23,4 +25,7 @@ public interface ArticleService {
 
     // 查看
     Article getArticle(@Param("id") Integer id);
+
+    // 获取文章列表
+    ArrayList<ArticlePreviewDto> getArticleList();
 }

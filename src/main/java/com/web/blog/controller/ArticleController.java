@@ -2,18 +2,17 @@ package com.web.blog.controller;
 
 import com.web.blog.common.Result;
 import com.web.blog.dto.ArticleDto;
+import com.web.blog.dto.ArticlePreviewDto;
 import com.web.blog.pojo.Article;
 import com.web.blog.service.ArticleService;
-import io.swagger.annotations.Api;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @CrossOrigin
-@Api(tags = "文章管理模块")
 public class ArticleController {
 
     private ArticleService articleService;
@@ -46,5 +45,12 @@ public class ArticleController {
         Article article = this.articleService.getArticle(articleDto.getId());
         return (article == null ?
                 Result.fail("获取文章失败") : Result.succ(200, "获取文章成功", article));
+    }
+
+    @PostMapping("/getArticleList")
+    public Result getArticleList(){
+        ArrayList<ArticlePreviewDto> articleList = this.articleService.getArticleList();
+        return (articleList == null ?
+                Result.fail("获取文章列表失败") : Result.succ(200, "获取文章列表成功", articleList));
     }
 }

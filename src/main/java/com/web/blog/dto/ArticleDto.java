@@ -1,8 +1,13 @@
 package com.web.blog.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 import java.util.Date;
 
+@AllArgsConstructor
+@NoArgsConstructor
 public class ArticleDto implements Serializable {
     private Integer id;
     private String title;
@@ -11,11 +16,6 @@ public class ArticleDto implements Serializable {
     private Integer topicID;
     private Date createTime;
     private Date updateTime;
-
-    public ArticleDto() {
-    }
-
-
 
     public Integer getId() {
         return id;

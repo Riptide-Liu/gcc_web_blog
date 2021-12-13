@@ -4,6 +4,7 @@ import com.web.blog.common.Result;
 import com.web.blog.dto.CategoryDto;
 import com.web.blog.pojo.Category;
 import com.web.blog.service.CategoryService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin //所有域名均可访问该类下所有接口
+@Api(tags = "栏目管理模块")
 public class CategoryController {
 
     private CategoryService categoryService;

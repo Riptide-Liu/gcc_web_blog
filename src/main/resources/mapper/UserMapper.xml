@@ -5,6 +5,12 @@
     <select id="selectOne" resultType="com.web.blog.pojo.User">
         SELECT * FROM gcc_web_blog.user where username = #{username} and password = #{password};
     </select>
+    <select id="selectUsername" resultType="com.web.blog.pojo.User">
+        SELECT count(*) FROM gcc_web_blog.user where username = #{username};
+    </select>
+    <select id="checkPassword" resultType="com.web.blog.pojo.User">
+        SELECT * FROM gcc_web_blog.user where  id= #{id} and password = #{password};
+    </select>
 
     <insert id="insertUser">
         insert into gcc_web_blog.user
@@ -16,6 +22,15 @@
     <update id="updatePassword">
         update gcc_web_blog.user
         set password = #{password}
+        where
+            id = #{id};
+    </update>
+
+    <update id="updateUserInfo">
+        update gcc_web_blog.user
+        set username = #{username},
+            nickname = #{nickname},
+            email = #{email}
         where
             id = #{id};
     </update>

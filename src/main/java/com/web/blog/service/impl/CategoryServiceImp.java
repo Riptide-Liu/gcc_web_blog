@@ -18,6 +18,7 @@ public class CategoryServiceImp implements CategoryService {
     }
     @Override
     public int insertCategory(String topic, String desc) {
+
         int result = categoryMapper.insertCategory(topic,desc);
         return result;
     }

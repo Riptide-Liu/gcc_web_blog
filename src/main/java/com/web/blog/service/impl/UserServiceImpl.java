@@ -7,7 +7,9 @@ import com.web.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -29,13 +31,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int insertUser(String username, String password, String nickname, String email) {
-        int result = userMapper.insertUser(username,password,nickname,email);
+        List<User> checkUsername = userMapper.selectUsername(username);
+        if(checkUsername.size()>1)
+            return 2;
+
+        return userMapper.insertUser(username,password,nickname,email);
+    }
+
+    @Override
+    public int updatePassword(Integer id,String old_password,String password) {
+        int result = 0;
+        User check_pwd = userMapper.checkPassword(id,old_password);
+        if(check_pwd!=null)
+            result = userMapper.updatePassword(id,password);
         return result;
     }
 
     @Override
-    public int updatePassword(Integer id, String password) {
-        int result = userMapper.updatePassword(id,password);
+    public int updateUserInfo(Integer id, String username, String nickname, String email) {
+        int result = userMapper.updateUserInfo(id,username,nickname,email);
         return result;
     }
 

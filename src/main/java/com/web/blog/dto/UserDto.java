@@ -8,6 +8,7 @@ public class UserDto  implements Serializable {
     private String nickname;
     private Integer id;
     private String email;
+    private String old_password;
 
 
     public UserDto() {
@@ -19,6 +20,15 @@ public class UserDto  implements Serializable {
 //        this.nickname = nickname;
 //        this.id = id;
 //    }
+
+
+    public String getOld_password() {
+        return old_password;
+    }
+
+    public void setOld_password(String old_password) {
+        this.old_password = old_password;
+    }
 
     public String getEmail() {
         return email;

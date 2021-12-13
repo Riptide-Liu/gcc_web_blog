@@ -4,8 +4,8 @@ import com.web.blog.common.Result;
 import com.web.blog.dto.ArticleDto;
 import com.web.blog.pojo.Article;
 import com.web.blog.service.ArticleService;
+import io.swagger.annotations.Api;
 import org.apache.ibatis.annotations.Param;
-import org.omg.PortableInterceptor.ServerRequestInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +13,7 @@ import java.util.Date;
 
 @RestController
 @CrossOrigin
+@Api(tags = "文章管理模块")
 public class ArticleController {
 
     private ArticleService articleService;

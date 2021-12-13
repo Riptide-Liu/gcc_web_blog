@@ -56,7 +56,7 @@
 </template>
 
 <script>
-    import Ajax from "../../../api/index";
+    import Ajax from "../../api/index";
     import _ from 'lodash';
     export default {
         name: "home",

@@ -7,7 +7,7 @@
                 type="primary"
                 class="topButton"
                 @click="openModal('creat')">
-                <!-- <img src="../../assets/Images/add.png"
+                <!-- <img src="../assets/Images/add.png"
                     style="width:40px; height:40px;" /> -->
                 新建分类
             </a-button>
@@ -170,7 +170,7 @@
 </template>
 
 <script>
-    import Ajax from "../../../api/index";
+    import Ajax from "../../api/index";
     import _ from 'lodash';
     export default {
         name: "type",

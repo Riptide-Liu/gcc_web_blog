@@ -2,11 +2,12 @@
 ```sql
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `username` varchar(45) COLLATE utf8_bin NOT NULL,
   `password` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   `nickname` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   `level` int(1) NOT NULL DEFAULT '1',
   `enable` int(1) NOT NULL DEFAULT '1',
+  `email` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
 ```

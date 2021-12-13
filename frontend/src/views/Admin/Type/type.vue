@@ -43,7 +43,7 @@
             title="分类信息新增"
             okText="确定"
             cancelText="取消"
-            width="1200px"
+            width="500px"
             centered
             :maskClosable="false"
             :confirm-loading="setLoading"
@@ -59,14 +59,14 @@
                             type="text"
                             v-model="typeCreatForm.typeName"
                             placeholder="分类名"
-                            style="width:100%"/>
+                            style="width:300px"/>
                     </a-form-model-item>
 
                     <a-form-model-item ref="tLevel" label="所属层级" prop="tLevel">
                         <a-select 
                             v-model="typeCreatForm.tLevel"
                             placeholder="所属层级"
-                            style="width:100%">
+                            style="width:300px">
                             <a-select-option v-for="item in levelOptions" 
                                 :key="item.value"
                                 :value="item.value">
@@ -81,13 +81,13 @@
                             type="text"
                             v-model="typeCreatForm.parentType"
                             placeholder="父分类"
-                            style="width:100%"
+                            style="width:300px"
                             disabled/>
                         <a-select 
                             v-else
                             v-model="typeCreatForm.parentType"
                             placeholder="父分类"
-                            style="width:100%">
+                            style="width:300px">
                             <a-select-option v-for="item in parentOptions" 
                                 :key="item.value"
                                 :value="item.value">
@@ -105,14 +105,16 @@
             title="分类信息编辑"
             okText="确定"
             cancelText="取消"
-            width="1200px"
+            width="500px"
             centered
             :maskClosable="false"
             :confirm-loading="setLoading"
             @ok="addBorrow()">
             <!-- 信息框 -->
-            <span>分类ID：</span>
-            <span>{{typeEditForm.tId}}</span>
+            <div style="margin-bottom: 20px">
+                <span>分类ID：</span>
+                <span>{{typeEditForm.tId}}</span>
+            </div>
             <!-- 编辑框 -->
             <div class="editBox">
                 <a-form-model 
@@ -124,14 +126,14 @@
                             type="text"
                             v-model="typeEditForm.typeName"
                             placeholder="分类名"
-                            style="width:100%"/>
+                            style="width:300px"/>
                     </a-form-model-item>
 
                     <a-form-model-item ref="tLevel" label="所属层级" prop="tLevel">
                         <a-select 
                             v-model="typeEditForm.tLevel"
                             placeholder="所属层级"
-                            style="width:100%">
+                            style="width:300px">
                             <a-select-option v-for="item in levelOptions" 
                                 :key="item.value"
                                 :value="item.value">
@@ -146,13 +148,13 @@
                             type="text"
                             v-model="typeEditForm.parentType"
                             placeholder="父分类"
-                            style="width:100%"
+                            style="width:300px"
                             disabled/>
                         <a-select 
                             v-else
                             v-model="typeEditForm.parentType"
                             placeholder="父分类"
-                            style="width:100%">
+                            style="width:300px">
                             <a-select-option v-for="item in parentOptions" 
                                 :key="item.value"
                                 :value="item.value">
@@ -168,7 +170,7 @@
 </template>
 
 <script>
-    import Ajax from "../../api/index";
+    import Ajax from "../../../api/index";
     import _ from 'lodash';
     export default {
         name: "type",
@@ -187,7 +189,7 @@
                 creatVisible: false,
                 typeEditVisible: false,
                 
-                labelCol: { span: 3 },
+                labelCol: { span: 4 },
                 wrapperCol: { span: 18 },
 
                 typeListData: [

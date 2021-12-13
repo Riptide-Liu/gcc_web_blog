@@ -43,7 +43,7 @@
 </template>
 
 <script>
-    import Ajax from "../../api/index";
+    import Ajax from "../../../api/index";
     import ICountUp from "vue-countup-v2";
     import _ from 'lodash';
     export default {
@@ -116,7 +116,7 @@
         border-radius: 40px;
         .leftBox{
             width: 100%;
-            height: 100%;
+            height: 800px;
             min-height: 700px;
             background-color: white;
             border-radius: 40px;
@@ -134,10 +134,10 @@
         }
         .rightBox{
             width: 100%;
-            height: 100%;
-            min-height: 700px;
+            height: 800px;
             background-color: white;
             border-radius: 40px;
+            overflow-y: auto;
             .topBox{
                 display: flex;
                 justify-content: space-between;

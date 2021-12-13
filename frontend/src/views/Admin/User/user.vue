@@ -15,6 +15,16 @@
             <a-table :columns="userListColumns" 
                 :data-source="userListData"
                 :loading="tableLoading">
+                <div class="ableText"
+                    slot="enable"
+                    slot-scope="text, record">
+                    <span v-if="record.enable == '1'">
+                        正常
+                    </span>
+                    <span v-else-if="record.enable == '0'">
+                        封禁
+                    </span>
+                </div>
                 <div class="buttonGroud"
                     slot="operation"
                     slot-scope="text, record">
@@ -41,51 +51,44 @@
             title="用户信息编辑"
             okText="确定"
             cancelText="取消"
-            width="1200px"
+            width="500px"
             centered
             :maskClosable="false"
             :confirm-loading="setLoading"
             @ok="addBorrow()">
             <!-- 信息框 -->
-            <span>用户ID：</span>
-            <span>{{userForm.uId}}</span>
+            <div style="margin-bottom: 20px">
+                <span>用户ID：</span>
+                <span>{{userForm.id}}</span>
+            </div>
             <!-- 编辑框 -->
             <div class="editBox">
                 <a-form-model 
                     ref="userForm" :model="userForm" :rules="userRules" 
                     :label-col="labelCol" :wrapper-col="wrapperCol" labelAlign="left">
                 
-                    <a-form-model-item ref="userName" label="用户名" prop="userName">
+                    <a-form-model-item ref="username" label="用户名" prop="username">
                         <a-input
                             type="text"
-                            v-model="userForm.userName"
+                            v-model="userForm.username"
                             placeholder="用户名"
-                            style="width:100%"/>
+                            style="width:300px"/>
                     </a-form-model-item>
 
-                    <a-form-model-item ref="uNickname" label="昵称" prop="uNickname">
+                    <a-form-model-item ref="nickname" label="昵称" prop="nickname">
                         <a-input
                             type="text"
-                            v-model="userForm.uNickname"
+                            v-model="userForm.nickname"
                             placeholder="昵称"
-                            style="width:100%"/>
+                            style="width:300px"/>
                     </a-form-model-item>
 
-                    <a-form-model-item ref="uEmail" label="邮箱" prop="uEmail">
+                    <a-form-model-item ref="email" label="邮箱" prop="email">
                         <a-input
                             type="text"
-                            v-model="userForm.uEmail"
+                            v-model="userForm.email"
                             placeholder="邮箱"
-                            style="width:100%"
-                            disabled/>
-                    </a-form-model-item>
-
-                    <a-form-model-item ref="uPassword" label="密码" prop="uPassword">
-                        <a-input-password
-                            type="password"
-                            v-model="userForm.uPassword"
-                            placeholder="密码"
-                            style="width:100%"/>
+                            style="width:300px"/>
                     </a-form-model-item>
 
                 </a-form-model>
@@ -95,7 +98,7 @@
 </template>
 
 <script>
-    import Ajax from "../../api/index";
+    import Ajax from "../../../api/index";
     import _ from 'lodash';
     export default {
         name: "user",
@@ -113,25 +116,37 @@
                 setLoading: false, 
                 userEditVisible: false,
                 
-                labelCol: { span: 3 },
+                labelCol: { span: 4 },
                 wrapperCol: { span: 18 },
 
                 userListData: [
                     {
-                        uId: '202100000001', 
-                        userName: 'zhangsan.blog',
-                        uNickname: 'SanZ', 
-                        uEmail: 'zhangsan@163.com', 
-                        uPassword: '123456', 
+                        username: 'zhangsan.blog',
+                        nickname: 'SanZ', 
+                        email: 'zhangsan@163.com', 
+                        id: '202100000001', 
+                        level: '1',
+                        enable: '1',
+                        password: '123456', 
+                        blogNumber: '777', 
+                    },
+                    {
+                        username: 'lisi.blog',
+                        nickname: 'siL', 
+                        email: 'lisi@163.com', 
+                        id: '202100000002', 
+                        level: '1',
+                        enable: '0',
+                        password: '654321', 
                         blogNumber: '777', 
                     }
                 ],
                 userListColumns: [
-                    { title: '用户ID', dataIndex: 'uId', key: 'uId', width: 150, align: 'center' },
-                    { title: '用户名', dataIndex: 'userName', key: 'userName', width: 150, align: 'center' },
-                    { title: '昵称', dataIndex: 'uNickname', key: 'uNickname', width: 150, align: 'center' },
-                    { title: '邮箱', dataIndex: 'uEmail', key: 'uEmail', width: 150, align: 'center' },
-                    // { title: '密码', dataIndex: 'uPassword', key: 'uPassword', width: 150, align: 'center' },
+                    { title: '用户ID', dataIndex: 'id', key: 'id', width: 150, align: 'center' },
+                    { title: '用户名', dataIndex: 'username', key: 'username', width: 150, align: 'center' },
+                    { title: '昵称', dataIndex: 'nickname', key: 'nickname', width: 150, align: 'center' },
+                    { title: '邮箱', dataIndex: 'email', key: 'email', width: 150, align: 'center' },
+                    // { title: '密码', dataIndex: 'password', key: 'password', width: 150, align: 'center' },
                     { title: '博文数量', dataIndex: 'blogNumber', key: 'blogNumber', width: 150, align: 'center' },
                     { 
                         title: '用户状态', 

@@ -1,4 +1,4 @@
-import request from '../../utils/js/request'
+import request from '../../utils/Js/request'
 
 export default {
     //登录接口

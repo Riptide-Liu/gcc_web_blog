@@ -42,9 +42,11 @@
         margin: 0;
         padding: 0;
     }
+
     .ant-form-item-label-left {
-        width: 100px !important;
+        width: 65px !important;
     }
+
     .ant-form-horizontal>.ant-form-item .ant-col-18{
         width: calc(100% - 123px);
     }

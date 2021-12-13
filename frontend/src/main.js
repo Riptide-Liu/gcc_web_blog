@@ -7,7 +7,7 @@ import echarts from 'echarts'
 import _ from 'lodash'
 
 
-import './utils/js/fd_logger'
+import './utils/Js/fd_logger'
 import 'ant-design-vue/dist/antd.css';
 import './assets/font_alibaba/iconfont.css'
 

@@ -6,18 +6,35 @@
                 <a-layout-header class="header">
                     <!-- 顶部左侧LOGO -->
                     <div class="topLeft">
-                        <!-- <img src="../../assets/Images/logo.png"> -->
+                        <img src="../../../assets/Images/admin_logo.png"
+                            style="width: 40px; height: 40px; margin-right: 10px">
                         <span style="font-size: 22px">GCCBlog后台管理</span>
                     </div>
                     <div class="topRight">
                         <a-divider type="vertical" 
                             style="color: black; margin:0 20px;"/>
-                        <div class="idBox"
-                            @click="goNewPage('userinfo')">
-                            <!-- <a-avatar :src="icon"
-                                style="width:40px; height:40px; margin-right:20px"/> -->
-                            <a class="nameText">{{nickname || '用户名'}}</a>
-                        </div>
+                        <!-- 头像 -->
+                        <a-avatar :src="icon"
+                            style="width: 40px; height: 40px; margin-right: 20px"/>
+                        <!-- 下拉菜单 -->
+                        <a-dropdown :trigger="['click']">
+                            <a class="nameText" @click="e => e.preventDefault()">
+                                {{nickname || '用户名'}}
+                                <a-icon type="down" />
+                            </a>
+                            <a-menu slot="overlay">
+                                <a-menu-item key="0" @click="goNewPage('userinfoBtn')">
+                                    <a>个人中心</a>
+                                </a-menu-item>
+                                <a-menu-item key="1" @click="goNewPage('clientBtn')">
+                                    <a>前往客户端</a>
+                                </a-menu-item>
+                                <a-menu-divider />
+                                <a-menu-item key="2" @click="logOut()">
+                                    退出登录
+                                </a-menu-item>
+                            </a-menu>
+                        </a-dropdown>
                     </div>
                 </a-layout-header>
             </a-layout>
@@ -39,10 +56,10 @@
                             @mouseout.native="leftBtnOut('homeBtn')"
                             @click="goNewPage('homeBtn')">
                             <img v-if="mainBtnStatu == 'showOut' && mainClickOrNot == false" 
-                                src="../../assets/Images/main_out.png"
+                                src="../../../assets/Images/main_out.png"
                                 style="width:22px; height:22px" />
                             <img v-else-if="mainBtnStatu == 'showIn' || mainClickOrNot == true"
-                                src="../../assets/Images/main_in.png"
+                                src="../../../assets/Images/main_in.png"
                                 style="width:22px; height:22px" />
                         </a-button>
 
@@ -54,10 +71,10 @@
                             @mouseout.native="leftBtnOut('userBtn')"
                             @click="goNewPage('userBtn')">
                             <img v-if="userBtnStatu == 'showOut' && userClickOrNot == false" 
-                                src="../../assets/Images/state_out.png"
+                                src="../../../assets/Images/state_out.png"
                                 style="width:22px; height:22px" />
                             <img v-else-if="userBtnStatu == 'showIn' || userClickOrNot == true"
-                                src="../../assets/Images/state_in.png"
+                                src="../../../assets/Images/state_in.png"
                                 style="width:22px; height:22px" />
                         </a-button>
 
@@ -69,10 +86,10 @@
                             @mouseout.native="leftBtnOut('typeBtn')"
                             @click="goNewPage('typeBtn')">
                             <img v-if="typeBtnStatu == 'showOut' && typeClickOrNot == false" 
-                                src="../../assets/Images/risk_out.png"
+                                src="../../../assets/Images/risk_out.png"
                                 style="width:22px; height:22px" />
                             <img v-else-if="typeBtnStatu == 'showIn' || typeClickOrNot == true"
-                                src="../../assets/Images/risk_in.png"
+                                src="../../../assets/Images/risk_in.png"
                                 style="width:22px; height:22px" />
                         </a-button>
 
@@ -84,10 +101,10 @@
                             @mouseout.native="leftBtnOut('blogBtn')"
                             @click="goNewPage('blogBtn')">
                             <img v-if="blogBtnStatu == 'showOut' && blogClickOrNot == false" 
-                                src="../../assets/Images/time_out.png"
+                                src="../../../assets/Images/time_out.png"
                                 style="width:22px; height:22px" />
                             <img v-else-if="blogBtnStatu == 'showIn' || blogClickOrNot == true"
-                                src="../../assets/Images/time_in.png"
+                                src="../../../assets/Images/time_in.png"
                                 style="width:22px; height:22px" />
                         </a-button>
                     </div>
@@ -107,7 +124,7 @@
 </template>
 
 <script>
-    import Ajax from "../../api/index";
+    import Ajax from "../../../api/index";
     import _ from 'lodash';
     export default {
         name: "layout",
@@ -120,6 +137,7 @@
                 id: '',
                 level: '',
                 enable: '',
+                icon: '',
 
                 mainClickOrNot: false,
                 userClickOrNot: false,
@@ -147,6 +165,13 @@
         methods:{
             //存取session
             getSession(){
+                if(sessionStorage.getItem('uwhichPage') == 'admin'){
+                    console.log("11111111111111")
+                    this.mainClickOrNot = true
+                    this.userClickOrNot = false
+                    this.typeClickOrNot = false
+                    this.blogClickOrNot = false
+                }
                 let {username,nickname,email,id,level,enable,} = JSON.parse(sessionStorage.getItem('userinfo'));
                 Object.assign(this,{username,nickname,email,id,level,enable})
                 console.log('userinfo:',this,{username,nickname,email,id,level,enable})
@@ -155,7 +180,7 @@
             getNowPage(){
                 let nowPage = (window.location.hash).split('#/')[1]
                 console.log('nowPage:',nowPage)
-                if(nowPage == 'home'){
+                if(nowPage == 'adminHome'){
                     this.mainClickOrNot = true
                     this.userClickOrNot = false
                     this.typeClickOrNot = false
@@ -170,7 +195,7 @@
                     this.userClickOrNot = false
                     this.typeClickOrNot = true
                     this.blogClickOrNot = false
-                }else if(nowPage == 'blog'){
+                }else if(nowPage == 'adminBlog'){
                     this.mainClickOrNot = false
                     this.userClickOrNot = false
                     this.typeClickOrNot = false
@@ -210,7 +235,7 @@
             //跳转对应页面
             goNewPage(btnName){
                 if(btnName == 'homeBtn'){
-                    this.$router.push({path: '/home'})
+                    this.$router.push({path: '/adminHome'})
                     this.mainClickOrNot = true
                     this.userClickOrNot = false
                     this.typeClickOrNot = false
@@ -228,19 +253,41 @@
                     this.typeClickOrNot = true
                     this.blogClickOrNot = false
                 }else if(btnName == 'blogBtn'){
-                    this.$router.push({path: '/blog'})
+                    this.$router.push({path: '/adminBlog'})
                     this.mainClickOrNot = false
                     this.userClickOrNot = false
                     this.typeClickOrNot = false
                     this.blogClickOrNot = true
-                }else if(btnName == 'userinfo'){
+                }else if(btnName == 'userinfoBtn'){
                     this.$router.push({path: '/userinfo'})
                     this.mainClickOrNot = false
                     this.userClickOrNot = false
                     this.typeClickOrNot = false
                     this.blogClickOrNot = false
+                }else if(btnName == 'clientBtn'){
+                    this.$router.push({path: '/clientHome'})
+                    this.mainClickOrNot = false
+                    this.userClickOrNot = false
+                    this.typeClickOrNot = false
+                    this.blogClickOrNot = false
+                    //保存当前端型
+                    window.sessionStorage.setItem('whichPage','client');
                 }
-            }
+            },
+            // 退出登录
+            logOut(){
+                this.$info({
+                    title:"是否确认要退出登录？(按ESC取消)",
+                    onOk:() => {
+                        //删除登陆状态
+                        window.sessionStorage.removeItem('loginOrNot')
+                        window.sessionStorage.removeItem('userinfo')
+                        window.sessionStorage.removeItem('whichPage')
+                        //跳转界面
+                        this.$router.push({path: '/login'})
+                    }
+                })
+            },
         }
     }
 </script>
@@ -252,26 +299,23 @@
             background: #FFFFFF;
             padding: 0;
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
             .topLeft{
-                vertical-align: middle;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                letter-spacing: 0;
+                margin-left: 30px;
             }
             .topRight{
-                .topButton{
-                    width: 40px;
-                    height: 40px;
-                    border: 0;
-                }
-                .idBox{
-                    display: inline-block;
-                    .nameText{
-                        font-family: Alibaba-PuHuiTi-M;
-                        font-size: 14px;
-                        color: #4B4B4B;
-                        letter-spacing: 0;
-                        text-align: center;
-                    }
+                margin-right: 30px;
+                .nameText{
+                    font-family: Alibaba-PuHuiTi-M;
+                    font-size: 14px;
+                    color: #4B4B4B;
+                    letter-spacing: 0;
+                    text-align: center;
                 }
             }
         }

@@ -34,45 +34,66 @@ export const constantRoutes = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('../views/login/Login'),
+    component: () => import('../views/Login/login'),
     meta: {
       hideInMenu: true,
       notCache: true
     }
   },
   {
-    path: '/layout',
-    name: 'layout',
-    component: () => import('../views/Layout/layout'),
+    path: '/adminLayout',
+    name: 'adminLayout',
+    component: () => import('../views/Admin/Layout/layout'),
     meta: {
       hideInMenu: true,
       notCache: true
     },
     children: [
       {
-        path: '/home',
-        name: 'home',
-        component: () => import('../views/Home/home')
-      },
-      {
-        path: '/user',
-        name: 'user',
-        component: () => import('../views/User/user')
-      },
-      {
-        path: '/type',
-        name: 'type',
-        component: () => import('../views/Type/type')
-      },
-      {
-        path: '/blog',
-        name: 'blog',
-        component: () => import('../views/Blog/blog')
+        path: '/adminHome',
+        name: 'adminHome',
+        component: () => import('../views/Admin/Home/home')
       },
       {
         path: '/userinfo',
         name: 'userinfo',
-        component: () => import('../views/UserInfo/userinfo')
+        component: () => import('../views/Admin/UserInfo/userinfo')
+      },
+      {
+        path: '/user',
+        name: 'user',
+        component: () => import('../views/Admin/User/user')
+      },
+      {
+        path: '/type',
+        name: 'type',
+        component: () => import('../views/Admin/Type/type')
+      },
+      {
+        path: '/adminBlog',
+        name: 'adminBlog',
+        component: () => import('../views/Admin/Blog/blog')
+      },
+    ]
+  },
+  {
+    path: '/clientLayout',
+    name: 'clientLayout',
+    component: () => import('../views/Client/Layout/layout'),
+    meta: {
+      hideInMenu: true,
+      notCache: true
+    },
+    children: [
+      {
+        path: '/clientHome',
+        name: 'clientHome',
+        component: () => import('../views/Client/Home/home')
+      },
+      {
+        path: '/clientBlog',
+        name: 'clientBlog',
+        component: () => import('../views/Client/Blog/blog')
       },
     ]
   },

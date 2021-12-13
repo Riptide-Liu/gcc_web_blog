@@ -76,9 +76,6 @@
             :maskClosable="false"
             :confirm-loading="setLoading"
             @ok="addBorrow()">
-            <!-- 信息框 -->
-            <span>博文ID：</span>
-            <span>{{nowBlog.bId}}</span>
             <!-- 编辑框 -->
             <div class="editBox">
                 <a-form-model 
@@ -122,7 +119,7 @@
 </template>
 
 <script>
-    import Ajax from "../../api/index";
+    import Ajax from "../../../api/index";
     import {mavonEditor} from 'mavon-editor';
     import 'mavon-editor/dist/css/index.css';
     import _ from 'lodash';

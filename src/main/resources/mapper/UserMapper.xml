@@ -12,6 +12,10 @@
         SELECT * FROM gcc_web_blog.user where  id= #{id} and password = #{password};
     </select>
 
+    <select id="selectUsernameAndNickname" resultType="com.web.blog.pojo.User">
+        SELECT username,nickname FROM gcc_web_blog.user where id = #{userId};
+    </select>
+
     <insert id="insertUser">
         insert into gcc_web_blog.user
             (username, password, nickname, email)

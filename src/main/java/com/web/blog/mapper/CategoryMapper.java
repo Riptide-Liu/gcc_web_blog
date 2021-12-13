@@ -22,4 +22,7 @@ public interface CategoryMapper {
 
     //获取所有栏目
     List<Category> selectCategory();
+
+    //获取栏目名
+    Category selectOne(@Param("id") Integer id);
 }

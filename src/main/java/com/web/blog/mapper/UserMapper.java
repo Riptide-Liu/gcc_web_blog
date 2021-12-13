@@ -15,6 +15,8 @@ public interface UserMapper {
             , @Param("password") String password);
     //验证用户名唯一
     List<User> selectUsername(@Param("username") String username);
+    //获取用户名字
+    User selectUsernameAndNickname(@Param("userId") Integer userId);
     //注册
     int insertUser(@Param("username") String username
             , @Param("password") String password

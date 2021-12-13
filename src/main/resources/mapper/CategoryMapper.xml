@@ -27,4 +27,8 @@
     <select id="selectCategory" resultType="com.web.blog.pojo.Category">
         SELECT * FROM gcc_web_blog.category;
     </select>
+
+    <select id="selectOne" resultType="com.web.blog.pojo.Category">
+        SELECT * FROM gcc_web_blog.category where id = #{id};
+    </select>
 </mapper>

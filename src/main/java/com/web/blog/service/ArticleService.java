@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public interface ArticleService {
 
@@ -24,8 +25,8 @@ public interface ArticleService {
     int deleteArticle(@Param("id") Integer id);
 
     // 查看
-    Article getArticle(@Param("id") Integer id);
+    Map<String, Object> getArticle(@Param("id") Integer id);
 
     // 获取文章列表
-    ArrayList<ArticlePreviewDto> getArticleList();
+    ArrayList<Object> getArticleList();
 }

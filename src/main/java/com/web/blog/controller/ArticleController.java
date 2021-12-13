@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -42,14 +44,15 @@ public class ArticleController {
 
     @PostMapping("/getArticle")
     public Result getArticle(@RequestBody ArticleDto articleDto){
-        Article article = this.articleService.getArticle(articleDto.getId());
+        Map<String, Object> article = this.articleService.getArticle(articleDto.getId());
+
         return (article == null ?
                 Result.fail("获取文章失败") : Result.succ(200, "获取文章成功", article));
     }
 
     @PostMapping("/getArticleList")
     public Result getArticleList(){
-        ArrayList<ArticlePreviewDto> articleList = this.articleService.getArticleList();
+        ArrayList<Object> articleList = this.articleService.getArticleList();
         return (articleList == null ?
                 Result.fail("获取文章列表失败") : Result.succ(200, "获取文章列表成功", articleList));
     }

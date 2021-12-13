@@ -2,13 +2,18 @@ package com.web.blog.service.impl;
 
 import com.web.blog.dto.ArticlePreviewDto;
 import com.web.blog.mapper.ArticleMapper;
+import com.web.blog.mapper.CategoryMapper;
+import com.web.blog.mapper.UserMapper;
 import com.web.blog.pojo.Article;
+import com.web.blog.pojo.Category;
+import com.web.blog.pojo.User;
 import com.web.blog.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
@@ -16,6 +21,16 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     public void setArticleMapper(ArticleMapper articleMapper) {
         this.articleMapper = articleMapper;
+    }
+    private UserMapper userMapper;
+    @Autowired
+    public void setUserMapper(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
+    private CategoryMapper categoryMapper;
+    @Autowired
+    public void setCategoryMapper(CategoryMapper categoryMapper) {
+        this.categoryMapper = categoryMapper;
     }
 
     @Override
@@ -34,13 +49,23 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Article getArticle(Integer id) {
-        return articleMapper.getArticle(id);
+    public Map<String, Object> getArticle(Integer id) {
+        Article article = articleMapper.getArticle(id);
+        if(article == null)
+            return null;
+        User user = userMapper.selectUsernameAndNickname(article.getUserID());
+        Category category = categoryMapper.selectOne(article.getTopicID());
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("article",article);
+        resultMap.put("nickname",user.getNickname());
+        resultMap.put("username",user.getUsername());
+        resultMap.put("topic",category.getTopic());
+        return resultMap;
     }
 
     @Override
-    public ArrayList<ArticlePreviewDto> getArticleList() {
-        ArrayList<ArticlePreviewDto> resultList = new ArrayList<>();
+    public ArrayList<Object> getArticleList() {
+        ArrayList<Object> resultList = new ArrayList<>();
         String content = "";
         for (Article article : articleMapper.getArticleList()){
             String _content = article.getContent();
@@ -51,8 +76,15 @@ public class ArticleServiceImpl implements ArticleService {
             else {
                 content = _content.substring(0, chopLength) + "...";
             }
-            resultList.add(new ArticlePreviewDto(article.getId(), article.getTitle(), content, article.getUserID(),
+            User user = userMapper.selectUsernameAndNickname(article.getUserID());
+            Category category = categoryMapper.selectOne(article.getTopicID());
+            Map<String, Object> resultMap = new HashMap<String, Object>();
+            resultMap.put("articlePreview",new ArticlePreviewDto(article.getId(), article.getTitle(), content, article.getUserID(),
                     article.getTopicID(), article.getUpdateTime()));
+            resultMap.put("nickname",user.getNickname());
+            resultMap.put("username",user.getUsername());
+            resultMap.put("topic",category.getTopic());
+            resultList.add(resultMap);
         }
         return resultList;
     }

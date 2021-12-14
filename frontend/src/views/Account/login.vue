@@ -3,26 +3,26 @@
         <!-- 表单背景框 -->
         <div class="formBox">
             <!-- 表单提交框 -->
-            <a-form 
+            <a-form-model 
                 ref="loginForm" :model="loginForm" :rules="loginRules">
                 <!-- 账号框 -->
                 <span>用户名：</span>
-                <a-form-item style="margin-bottom: 20px" prop="username">
+                <a-form-model-item style="margin-bottom: 20px" prop="username">
                     <a-input 
                         type="text" 
                         v-model="loginForm.username" 
                         placeholder="请输入用户名"
                         allowClear/>
-                </a-form-item>
+                </a-form-model-item>
                 <!-- 密码框 -->
                 <span>密码：</span>
-                <a-form-item style="margin-bottom: 20px" prop="password">
+                <a-form-model-item style="margin-bottom: 20px" prop="password">
                     <a-input-password
                         type="password"
                         v-model="loginForm.password"
                         placeholder="请输入密码"
                         @keyup.native.enter="userLogin('loginForm')"/>
-                </a-form-item>
+                </a-form-model-item>
                 <!-- 去向 -->
                 <a-select 
                     style="margin-bottom: 20px"
@@ -50,7 +50,7 @@
                     <a @click="visitorLogin()">游客登录</a>
                 </div>
                 <!-- 登录按钮 -->
-                <a-form-item size="large" style="text-align:center">
+                <a-form-model-item size="large" style="text-align:center">
                     <a-button
                         type="primary"
                         style="width: 100%; margin-top: 20px;"
@@ -58,8 +58,8 @@
                         @click.native="userLogin('loginForm')">
                         登录
                     </a-button>
-                </a-form-item>
-            </a-form>
+                </a-form-model-item>
+            </a-form-model>
         </div>
     </div>
 </template>
@@ -77,8 +77,8 @@
                     password: ""
                 },
                 loginRules: {
-                    username: [{ required: true, message:'用户名不能为空', trigger: "blur" }],
-                    password: [{ required: true, message:'密码不能为空', trigger: "blur" }],
+                    username: [{ required: true, message:'用户名不能为空', trigger: "change" }],
+                    password: [{ required: true, message:'密码不能为空', trigger: "change" }],
                 },
                 goWhere: '请选择登录去向',
                 whereOptions: [

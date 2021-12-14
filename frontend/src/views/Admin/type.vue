@@ -223,10 +223,14 @@
                 ],
 
                 typeCreatForm: [],
-                typeCreatRules: [],
+                typeCreatRules: {
+                    typeName: [{ required: true, message:'该项不能为空', trigger: "blur" }],
+                    tLevel: [{ required: true, message:'该项不能为空', trigger: "blur" }],
+                    parentType: [{ required: true, message:'该项不能为空', trigger: "blur" }],
+                },
 
                 typeEditForm: [],
-                typeEditRules: [],
+                typeEditRules: {},
 
                 nowType: [],
 

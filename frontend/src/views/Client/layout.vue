@@ -23,12 +23,10 @@
                                 <a-icon type="down" />
                             </a>
                             <a-menu slot="overlay">
-                                <div v-if="level != 0">
-                                    <a-menu-item key="0" @click="goNewPage('adminBtn')">
-                                        <a>前往管理端</a>
-                                    </a-menu-item>
-                                    <a-menu-divider />
-                                </div>
+                                <a-menu-item key="0" @click="goNewPage('adminBtn')">
+                                    <a>前往管理端</a>
+                                </a-menu-item>
+                                <a-menu-divider />
                                 <a-menu-item key="1" @click="logOut()">
                                     退出登录
                                 </a-menu-item>
@@ -90,11 +88,18 @@
                 console.log('userinfo:',this,{username,nickname,email,id,level,enable})
             },
             //跳转对应页面
-            goNewPage(btnName,){
-                if(btnName == 'adminBtn'){
-                    this.$router.push({path: '/adminHome'})
-                    //保存当前端型
-                    window.sessionStorage.setItem('whichPage','admin');
+            goNewPage(btnName){
+                if(this.level == 0){
+                    //失败提示框
+                    this.$error({
+                        title: '游客没有权限进入该页面',
+                    });
+                }else{
+                    if(btnName == 'adminBtn'){
+                        this.$router.push({path: '/adminHome'})
+                        //保存当前端型
+                        window.sessionStorage.setItem('whichPage','admin');
+                    }
                 }
             },
             // 退出登录

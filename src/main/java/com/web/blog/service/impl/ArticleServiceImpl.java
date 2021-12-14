@@ -69,12 +69,11 @@ public class ArticleServiceImpl implements ArticleService {
         String content = "";
         for (Article article : articleMapper.getArticleList()){
             String _content = article.getContent();
-            int chopLength = (int) Math.round(_content.length() * 0.2);
             if (_content.length() < 50){
                 content = _content;
             }
             else {
-                content = _content.substring(0, chopLength) + "...";
+                content = _content.substring(0, (int) Math.round(_content.length() * 0.2)) + "...";
             }
             User user = userMapper.selectUsernameAndNickname(article.getUserID());
             Category category = categoryMapper.selectOne(article.getTopicID());

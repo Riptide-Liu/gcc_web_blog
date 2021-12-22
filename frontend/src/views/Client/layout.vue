@@ -6,7 +6,7 @@
                 <a-layout-header class="header">
                     <!-- 顶部左侧LOGO -->
                     <div class="topLeft">
-                        <img src="../../../assets/Images/client_logo.jpg"
+                        <img src="../../assets/Images/client_logo.jpg"
                             style="width: 40px; height: 40px; margin-right: 10px">
                         <span style="font-size: 22px">GCCBlog</span>
                     </div>
@@ -23,10 +23,12 @@
                                 <a-icon type="down" />
                             </a>
                             <a-menu slot="overlay">
-                                <a-menu-item key="0" @click="goNewPage('adminBtn')">
-                                    <a>前往管理端</a>
-                                </a-menu-item>
-                                <a-menu-divider />
+                                <div v-if="level != 0">
+                                    <a-menu-item key="0" @click="goNewPage('adminBtn')">
+                                        <a>前往管理端</a>
+                                    </a-menu-item>
+                                    <a-menu-divider />
+                                </div>
                                 <a-menu-item key="1" @click="logOut()">
                                     退出登录
                                 </a-menu-item>
@@ -51,7 +53,7 @@
 </template>
 
 <script>
-    import Ajax from "../../../api/index";
+    import Ajax from "../../api/index";
     import _ from 'lodash';
     export default {
         name: "layout",

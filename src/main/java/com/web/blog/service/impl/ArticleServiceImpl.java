@@ -54,12 +54,12 @@ public class ArticleServiceImpl implements ArticleService {
         if(article == null)
             return null;
         User user = userMapper.selectUsernameAndNickname(article.getUserID());
-        String category = categoryMapper.selectOne(article.getTopicID());
+        Category category = categoryMapper.selectOne(article.getTopicID());
         Map<String, Object> resultMap = new HashMap<String, Object>();
         resultMap.put("article",article);
-        resultMap.put("nickname",user.getNickname());
-        resultMap.put("username",user.getUsername());
-        resultMap.put("topic",category);
+        resultMap.put("nickname", user == null ? null : user.getNickname());
+        resultMap.put("username", user == null ? null : user.getUsername());
+        resultMap.put("topic", category == null ? null : category.getTopic());
         return resultMap;
     }
 
@@ -69,21 +69,20 @@ public class ArticleServiceImpl implements ArticleService {
         String content = "";
         for (Article article : articleMapper.getArticleList()){
             String _content = article.getContent();
-            int chopLength = (int) Math.round(_content.length() * 0.2);
             if (_content.length() < 50){
                 content = _content;
             }
             else {
-                content = _content.substring(0, chopLength) + "...";
+                content = _content.substring(0, (int) Math.round(_content.length() * 0.2)) + "...";
             }
             User user = userMapper.selectUsernameAndNickname(article.getUserID());
-            String category = categoryMapper.selectOne(article.getTopicID());
+            Category category = categoryMapper.selectOne(article.getTopicID());
             Map<String, Object> resultMap = new HashMap<String, Object>();
             resultMap.put("articlePreview",new ArticlePreviewDto(article.getId(), article.getTitle(), content, article.getUserID(),
                     article.getTopicID(), article.getUpdateTime()));
-            resultMap.put("nickname",user.getNickname());
-            resultMap.put("username",user.getUsername());
-            resultMap.put("topic",category);
+            resultMap.put("nickname", user == null ? null : user.getNickname());
+            resultMap.put("username", user == null ? null : user.getUsername());
+            resultMap.put("topic", category == null ? null : category.getTopic());
             resultList.add(resultMap);
         }
         return resultList;

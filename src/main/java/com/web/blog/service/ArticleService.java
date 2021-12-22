@@ -1,11 +1,7 @@
 package com.web.blog.service;
 
-import com.web.blog.dto.ArticlePreviewDto;
-import com.web.blog.pojo.Article;
 import org.apache.ibatis.annotations.Param;
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public interface ArticleService {

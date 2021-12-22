@@ -119,7 +119,7 @@
 </template>
 
 <script>
-    import Ajax from "../../../api/index";
+    import Ajax from "../../api/index";
     import {mavonEditor} from 'mavon-editor';
     import 'mavon-editor/dist/css/index.css';
     import _ from 'lodash';

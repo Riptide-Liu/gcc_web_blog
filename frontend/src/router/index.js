@@ -32,18 +32,30 @@ Vue.use(Router)
  */
 export const constantRoutes = [
   {
-    path: '/login',
-    name: 'login',
-    component: () => import('../views/Login/login'),
+    path: '/accountLayout',
+    name: 'accountLayout',
+    component: () => import('../views/Account/layout'),
     meta: {
       hideInMenu: true,
       notCache: true
-    }
+    },
+    children: [
+      {
+        path: '/login',
+        name: 'login',
+        component: () => import('../views/Account/login'),
+      },
+      {
+        path: '/signup',
+        name: 'signup',
+        component: () => import('../views/Account/signup'),
+      },
+    ]
   },
   {
     path: '/adminLayout',
     name: 'adminLayout',
-    component: () => import('../views/Admin/Layout/layout'),
+    component: () => import('../views/Admin/layout'),
     meta: {
       hideInMenu: true,
       notCache: true
@@ -52,34 +64,34 @@ export const constantRoutes = [
       {
         path: '/adminHome',
         name: 'adminHome',
-        component: () => import('../views/Admin/Home/home')
+        component: () => import('../views/Admin/home')
       },
       {
         path: '/userinfo',
         name: 'userinfo',
-        component: () => import('../views/Admin/UserInfo/userinfo')
+        component: () => import('../views/Admin/userinfo')
       },
       {
         path: '/user',
         name: 'user',
-        component: () => import('../views/Admin/User/user')
+        component: () => import('../views/Admin/user')
       },
       {
         path: '/type',
         name: 'type',
-        component: () => import('../views/Admin/Type/type')
+        component: () => import('../views/Admin/type')
       },
       {
         path: '/adminBlog',
         name: 'adminBlog',
-        component: () => import('../views/Admin/Blog/blog')
+        component: () => import('../views/Admin/blog')
       },
     ]
   },
   {
     path: '/clientLayout',
     name: 'clientLayout',
-    component: () => import('../views/Client/Layout/layout'),
+    component: () => import('../views/Client/layout'),
     meta: {
       hideInMenu: true,
       notCache: true
@@ -88,12 +100,12 @@ export const constantRoutes = [
       {
         path: '/clientHome',
         name: 'clientHome',
-        component: () => import('../views/Client/Home/home')
+        component: () => import('../views/Client/home')
       },
       {
         path: '/clientBlog',
         name: 'clientBlog',
-        component: () => import('../views/Client/Blog/blog')
+        component: () => import('../views/Client/blog')
       },
     ]
   },

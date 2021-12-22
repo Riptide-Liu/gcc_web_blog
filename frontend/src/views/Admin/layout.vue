@@ -6,7 +6,7 @@
                 <a-layout-header class="header">
                     <!-- 顶部左侧LOGO -->
                     <div class="topLeft">
-                        <img src="../../../assets/Images/admin_logo.png"
+                        <img src="../../assets/Images/admin_logo.png"
                             style="width: 40px; height: 40px; margin-right: 10px">
                         <span style="font-size: 22px">GCCBlog后台管理</span>
                     </div>
@@ -56,10 +56,10 @@
                             @mouseout.native="leftBtnOut('homeBtn')"
                             @click="goNewPage('homeBtn')">
                             <img v-if="mainBtnStatu == 'showOut' && mainClickOrNot == false" 
-                                src="../../../assets/Images/main_out.png"
+                                src="../../assets/Images/main_out.png"
                                 style="width:22px; height:22px" />
                             <img v-else-if="mainBtnStatu == 'showIn' || mainClickOrNot == true"
-                                src="../../../assets/Images/main_in.png"
+                                src="../../assets/Images/main_in.png"
                                 style="width:22px; height:22px" />
                         </a-button>
 
@@ -71,10 +71,10 @@
                             @mouseout.native="leftBtnOut('userBtn')"
                             @click="goNewPage('userBtn')">
                             <img v-if="userBtnStatu == 'showOut' && userClickOrNot == false" 
-                                src="../../../assets/Images/state_out.png"
+                                src="../../assets/Images/state_out.png"
                                 style="width:22px; height:22px" />
                             <img v-else-if="userBtnStatu == 'showIn' || userClickOrNot == true"
-                                src="../../../assets/Images/state_in.png"
+                                src="../../assets/Images/state_in.png"
                                 style="width:22px; height:22px" />
                         </a-button>
 
@@ -86,10 +86,10 @@
                             @mouseout.native="leftBtnOut('typeBtn')"
                             @click="goNewPage('typeBtn')">
                             <img v-if="typeBtnStatu == 'showOut' && typeClickOrNot == false" 
-                                src="../../../assets/Images/risk_out.png"
+                                src="../../assets/Images/risk_out.png"
                                 style="width:22px; height:22px" />
                             <img v-else-if="typeBtnStatu == 'showIn' || typeClickOrNot == true"
-                                src="../../../assets/Images/risk_in.png"
+                                src="../../assets/Images/risk_in.png"
                                 style="width:22px; height:22px" />
                         </a-button>
 
@@ -101,10 +101,10 @@
                             @mouseout.native="leftBtnOut('blogBtn')"
                             @click="goNewPage('blogBtn')">
                             <img v-if="blogBtnStatu == 'showOut' && blogClickOrNot == false" 
-                                src="../../../assets/Images/time_out.png"
+                                src="../../assets/Images/time_out.png"
                                 style="width:22px; height:22px" />
                             <img v-else-if="blogBtnStatu == 'showIn' || blogClickOrNot == true"
-                                src="../../../assets/Images/time_in.png"
+                                src="../../assets/Images/time_in.png"
                                 style="width:22px; height:22px" />
                         </a-button>
                     </div>
@@ -124,7 +124,7 @@
 </template>
 
 <script>
-    import Ajax from "../../../api/index";
+    import Ajax from "../../api/index";
     import _ from 'lodash';
     export default {
         name: "layout",

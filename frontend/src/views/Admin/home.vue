@@ -43,7 +43,7 @@
 </template>
 
 <script>
-    import Ajax from "../../../api/index";
+    import Ajax from "../../api/index";
     import ICountUp from "vue-countup-v2";
     import _ from 'lodash';
     export default {

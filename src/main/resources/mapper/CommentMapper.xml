@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.blog.mapper.CommentMapper">
+
+    <insert id="insertComment">
+        insert into gcc_web_blog.comment
+            (articleId, userId, content, createTime)
+        values
+            (#{articleId}, #{userId}, #{content}, now());
+    </insert>
+
+    <delete id="deleteComment">
+        delete from gcc_web_blog.comment
+        where id = #{id};
+    </delete>
+
+    <select id="selectCommentsByArticleId" resultType="com.web.blog.pojo.Comment">
+        select * from gcc_web_blog.comment
+        where articleId = #{articleId};
+    </select>
+
+    <select id="selectCommentsByUserId" resultType="com.web.blog.pojo.Comment">
+        select * from gcc_web_blog.comment
+        where userId = #{userId};
+    </select>
+</mapper>

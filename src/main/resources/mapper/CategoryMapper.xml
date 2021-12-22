@@ -5,15 +5,16 @@
 
     <insert id="insertCategory">
         insert into gcc_web_blog.category
-            (topic, t_desc)
+            (topic, parentId, topicLevel)
         values
-            (#{topic}, #{desc});
+            (#{topic}, #{parentId}, #{topicLevel});
     </insert>
 
     <update id="updateCategory">
         update gcc_web_blog.category
         set topic = #{topic},
-            t_desc = #{desc}
+            parentId = #{parentId},
+            topicLevel = #{topicLevel}
         where
             id = #{id};
     </update>
@@ -28,7 +29,15 @@
         SELECT * FROM gcc_web_blog.category;
     </select>
 
-    <select id="selectOne" resultType="com.web.blog.pojo.Category">
-        SELECT * FROM gcc_web_blog.category where id = #{id};
+    <select id="selectOne" resultType="string">
+        SELECT topic FROM gcc_web_blog.category where id = #{id};
+    </select>
+
+    <select id="selectLevel" resultType="com.web.blog.pojo.Category">
+        SELECT * FROM gcc_web_blog.category where topicLevel = #{level};
+    </select>
+
+    <select id="selectByTopic" resultType="integer">
+        SELECT count(*) FROM gcc_web_blog.category where topic = #{topic};
     </select>
 </mapper>

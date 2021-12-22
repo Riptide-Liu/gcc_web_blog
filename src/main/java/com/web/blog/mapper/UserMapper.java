@@ -37,4 +37,6 @@ public interface UserMapper {
     int disableUser(@Param("id") Integer id);
     //启用
     int enableUser(@Param("id") Integer id);
+    //获取用户列表
+    List<User> selectAllUser();
 }

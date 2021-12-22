@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.blog.mapper.LikeLogMapper">
+
+    <insert id="insertLike">
+        insert into gcc_web_blog.like_log
+            (userId, articleId)
+        values
+            (#{userId}, #{articleId});
+    </insert>
+
+    <delete id="deleteLike">
+        delete from gcc_web_blog.like_log
+        where userId = #{userId} and articleId = #{articleId}
+    </delete>
+
+    <select id="selectLike" resultType="integer">
+        select count(*) from gcc_web_blog.like_log
+        where articleId = #{articleId};
+    </select>
+</mapper>

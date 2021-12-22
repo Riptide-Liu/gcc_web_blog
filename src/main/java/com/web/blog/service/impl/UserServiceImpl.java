@@ -1,15 +1,15 @@
 package com.web.blog.service.impl;
 
-import com.web.blog.mapper.CategoryMapper;
 import com.web.blog.mapper.UserMapper;
 import com.web.blog.pojo.User;
 import com.web.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.*;
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -63,5 +63,24 @@ public class UserServiceImpl implements UserService {
     public int enableUser(Integer id) {
         int result = userMapper.enableUser(id);
         return result;
+    }
+
+    @Override
+    public ArrayList<Object> selectAllUser() {
+        ArrayList<Object> resultList = new ArrayList<>();
+        for (User item:userMapper.selectAllUser()){
+            Map<String,Object> result = new HashMap<>();
+            result.put("id",item.getId());
+            result.put("username",item.getUsername());
+            result.put("nickname",item.getNickname());
+            result.put("level",item.getLevel());
+            result.put("enable",item.getEnable());
+            result.put("email",item.getEmail());
+            
+            result.put("blogNumber",item.getId());
+            resultList.add(result);
+        }
+
+        return resultList;
     }
 }

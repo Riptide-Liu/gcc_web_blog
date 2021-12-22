@@ -3,6 +3,10 @@ package com.web.blog.service;
 import com.web.blog.pojo.User;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 public interface UserService {
     //登录
     User selectOne(@Param("username") String username
@@ -26,4 +30,6 @@ public interface UserService {
     int disableUser(@Param("id") Integer id);
     //启用
     int enableUser(@Param("id") Integer id);
+    //获取用户列表
+    ArrayList<Object> selectAllUser();
 }

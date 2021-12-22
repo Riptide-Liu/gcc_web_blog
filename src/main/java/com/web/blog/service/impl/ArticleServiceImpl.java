@@ -54,12 +54,12 @@ public class ArticleServiceImpl implements ArticleService {
         if(article == null)
             return null;
         User user = userMapper.selectUsernameAndNickname(article.getUserID());
-        Category category = categoryMapper.selectOne(article.getTopicID());
+        String category = categoryMapper.selectOne(article.getTopicID());
         Map<String, Object> resultMap = new HashMap<String, Object>();
         resultMap.put("article",article);
         resultMap.put("nickname",user.getNickname());
         resultMap.put("username",user.getUsername());
-        resultMap.put("topic",category.getTopic());
+        resultMap.put("topic",category);
         return resultMap;
     }
 
@@ -77,13 +77,13 @@ public class ArticleServiceImpl implements ArticleService {
                 content = _content.substring(0, chopLength) + "...";
             }
             User user = userMapper.selectUsernameAndNickname(article.getUserID());
-            Category category = categoryMapper.selectOne(article.getTopicID());
+            String category = categoryMapper.selectOne(article.getTopicID());
             Map<String, Object> resultMap = new HashMap<String, Object>();
             resultMap.put("articlePreview",new ArticlePreviewDto(article.getId(), article.getTitle(), content, article.getUserID(),
                     article.getTopicID(), article.getUpdateTime()));
             resultMap.put("nickname",user.getNickname());
             resultMap.put("username",user.getUsername());
-            resultMap.put("topic",category.getTopic());
+            resultMap.put("topic",category);
             resultList.add(resultMap);
         }
         return resultList;

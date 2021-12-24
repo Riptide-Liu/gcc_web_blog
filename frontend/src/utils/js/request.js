@@ -1,8 +1,5 @@
 import axios from 'axios'
-import Vue from 'vue'
-import {
-  Message,
-} from 'element-ui'
+import { Message } from 'element-ui'
 
 // create an axios instance
 axios.defaults.headers.post['Content-Type'] = 'application/json';

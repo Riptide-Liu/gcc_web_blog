@@ -1,10 +1,8 @@
 <template>
     <div class="Login">
-        <!-- 表单背景框 -->
+        <!-- 表单框 -->
         <div class="formBox">
-            <!-- 表单提交框 -->
-            <a-form-model 
-                ref="loginForm" :model="loginForm" :rules="loginRules">
+            <a-form-model ref="loginForm" :model="loginForm" :rules="loginRules">
                 <!-- 账号框 -->
                 <span>用户名：</span>
                 <a-form-model-item style="margin-bottom: 20px" prop="username">
@@ -12,7 +10,8 @@
                         type="text" 
                         v-model="loginForm.username" 
                         placeholder="请输入用户名"
-                        allowClear/>
+                        allowClear
+                        @change="unRemember()"/>
                 </a-form-model-item>
                 <!-- 密码框 -->
                 <span>密码：</span>
@@ -21,11 +20,13 @@
                         type="password"
                         v-model="loginForm.password"
                         placeholder="请输入密码"
+                        @change="unRemember()"
                         @keyup.native.enter="userLogin('loginForm')"/>
                 </a-form-model-item>
                 <!-- 去向 -->
+                <span>登录去向：</span>
                 <a-select 
-                    style="margin-bottom: 20px"
+                    style="margin: 5px 0 20px 0"
                     v-model="goWhere"
                     placeholder="请选择登录去向">
                     <a-select-option v-for="item in whereOptions" 
@@ -39,10 +40,11 @@
                     <a-checkbox 
                         style="color: white;"
                         v-model="loginForm.remember" 
-                        @change="rememberPassword"  >
+                        @change="rememberPassword">
                         记住密码
                     </a-checkbox>
                 </div>
+                <!-- 引导信息框 -->
                 <div class="signUpBox">
                     <span>还没账号？试着</span>
                     <a @click="goSignUp()">注册</a>
@@ -50,7 +52,7 @@
                     <a @click="visitorLogin()">游客登录</a>
                 </div>
                 <!-- 登录按钮 -->
-                <a-form-model-item size="large" style="text-align:center">
+                <a-form-model-item style="margin-bottom: 0px; text-align:center">
                     <a-button
                         type="primary"
                         style="width: 100%; margin-top: 20px;"
@@ -71,10 +73,10 @@
         data() {
             return {
                 loginForm: {
-                    loginLoading: false,
-                    remember: false,
                     username: "",
-                    password: ""
+                    password: "",
+                    remember: false,
+                    loginLoading: false,
                 },
                 loginRules: {
                     username: [{ required: true, message:'用户名不能为空', trigger: "change" }],
@@ -87,19 +89,13 @@
                 ],
             };
         },
-        computed:{
-            
-        },
         created(){
-            this.rememberSave()
-        },
-        mounted(){
-
+            this.rememberCheck()
         },
         methods:{
-            //记住密码校验
-            rememberSave(){
-                let rem = JSON.parse(localStorage.getItem('remember'));
+            //进入页面时的记住密码校验
+            rememberCheck(){
+                let rem = JSON.parse(localStorage.getItem('userRemember'));
                 if (rem) {
                     this.loginForm.username = rem.username;
                     this.loginForm.password = rem.password;
@@ -112,7 +108,11 @@
                     username:this.loginForm.username,
                     password:this.loginForm.password
                 };
-                val?localStorage.setItem('remember',JSON.stringify(rem)):localStorage.removeItem('remember');
+                val?localStorage.setItem('userRemember',JSON.stringify(rem)):localStorage.removeItem('userRemember');
+            },
+            //取消记住密码
+            unRemember(){
+                this.loginForm.remember = false
             },
             //跳转注册界面
             goSignUp(){
@@ -121,12 +121,12 @@
             //游客登录
             visitorLogin(){
                 this.$router.push({path: '/clientHome'})
-                window.sessionStorage.setItem('userinfo',JSON.stringify(
+                window.sessionStorage.setItem('userInfo',JSON.stringify(
                     {
                         username: 'visitor',
                         nickname: '游客', 
                         email: 'visitor@visitor.com', 
-                        id: 'visitor', 
+                        id: '', 
                         level: '0',
                         enable: '1',
                     }
@@ -139,71 +139,93 @@
                     "username": this.loginForm.username,
                     "password": this.loginForm.password,
                 };
-                console.log("params:",params)
+                //表单校验
+                this.$refs.loginForm.validate(valid => {
+                    //成功
+                    if(valid){
+                        this.loginForm.loginLoading = true
+                        Ajax.UserLogin(params).then(res =>{
+                            this.$_info('成功返回：',res);
+                            if(res.code == 200){
+                                //恢复loading
+                                this.loginForm.loginLoading = false;
+                                //保存登陆状态
+                                window.sessionStorage.setItem('loginOrNot','yes');
+                                window.sessionStorage.setItem('userInfo',JSON.stringify(res.data));
+                                //跳转界面
+                                if(this.goWhere == 'admin'){
+                                    this.$router.push({path: '/adminHome'})
+                                    //保存当前端型
+                                    window.sessionStorage.setItem('whichPage','admin');
+                                }else if(this.goWhere == 'client'){
+                                    this.$router.push({path: '/clientHome'})
+                                    //保存当前端型
+                                    window.sessionStorage.setItem('whichPage','client');
+                                }
+                                //成功提示框
+                                this.$message.success({
+                                    content: '登录成功',
+                                });
+                            }else if(res.code == 400){
+                                //失败提示框
+                                this.$error({
+                                    title: res.data,
+                                });
+                                //恢复loading
+                                this.loginForm.loginLoading = false;
+                            }
+                        }).catch(err =>{
+                            this.$_error('错误信息：',err);
+                        })
+                    }
+                    //失败
+                    else{
+                        if(this.goWhere == '请选择登录去向'){
+                            //失败提示框
+                            this.$error({
+                                title: '请选择登录的端型',
+                            });
+                        }else{
+                            //失败提示框
+                            this.$error({
+                                title: '必填项不可为空',
+                            });
+                        }
+                    }
+                })
+            },
+            //绕过登录
+            byelogin(){
                 if(this.goWhere == '请选择登录去向'){
                     //失败提示框
                     this.$error({
                         title: '请选择登录的端型',
                     });
-                }else if(this.goWhere == 'admin'){
-                    this.$router.push({path: '/adminHome'})
-                    //保存当前端型
-                    window.sessionStorage.setItem('whichPage','admin');
-                }else if(this.goWhere == 'client'){
-                    this.$router.push({path: '/clientHome'})
-                    //保存当前端型
-                    window.sessionStorage.setItem('whichPage','client');
-                }
-                //保存登陆状态
-                window.sessionStorage.setItem('loginOrNot','yes');
-                window.sessionStorage.setItem('userinfo',JSON.stringify(
-                    {
-                        username: 'admin',
-                        nickname: '管理员', 
-                        email: 'admin@admin.com', 
-                        id: '1', 
-                        level: '2',
-                        enable: '1',
-                        password: 'admin', 
-                        blogNumber: '0', 
+                }else{
+                    //保存登陆状态
+                    window.sessionStorage.setItem('loginOrNot','yes');
+                    window.sessionStorage.setItem('userInfo',JSON.stringify(
+                        {
+                            username: 'admin',
+                            nickname: '管理员', 
+                            email: 'admin@admin.com', 
+                            id: '1', 
+                            level: '2',
+                            enable: '1',
+                        }
+                    ));
+                    //跳转界面
+                    if(this.goWhere == 'admin'){
+                        this.$router.push({path: '/adminHome'})
+                        //保存当前端型
+                        window.sessionStorage.setItem('whichPage','admin');
+                    }else if(this.goWhere == 'client'){
+                        this.$router.push({path: '/clientHome'})
+                        //保存当前端型
+                        window.sessionStorage.setItem('whichPage','client');
                     }
-                ));
-                // Ajax.UserLogin(params).then(res =>{
-                //     this.$_info('成功返回：',res);
-                //     console.log("res:",res)
-                //     if(res.code == 200){
-                //         //成功提示框
-                //         this.$success({
-                //             title: res.msg,
-                //         });
-                //         //恢复loading
-                //         this.setLoading = false;
-                //         //保存登陆状态
-                //         window.sessionStorage.setItem('loginOrNot','yes');
-                //         window.sessionStorage.setItem('userinfo',JSON.stringify(res.data));
-                //         //跳转界面
-                //         if(this.goWhere == 'admin'){
-                //             this.$router.push({path: '/adminHome'})
-                //             //保存当前端型
-                //             window.sessionStorage.setItem('whichPage','admin');
-                //         }else if(this.goWhere == 'client'){
-                //             this.$router.push({path: '/clientHome'})
-                //             //保存当前端型
-                //             window.sessionStorage.setItem('whichPage','client');
-                //         }
-                //     }else if(res.code == '400'){
-                //         //失败提示框
-                //         this.$error({
-                //             title: res.data,
-                //         });
-                //         //恢复loading
-                //         this.setLoading = false;
-                //     }
-                // }).catch(err =>{
-                //     this.$_error('错误信息：',err);
-                //     console.log("err:",err)
-                // })
-            },
+                }
+            }
         }
     }
 </script>
@@ -214,6 +236,9 @@
         height: 100%;
         margin: 0;
         padding: 0;
+        span{
+            color: white;
+        } 
         .formBox{
             .signUpBox{
                 margin-top: 10px

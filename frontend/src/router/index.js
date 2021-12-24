@@ -31,6 +31,7 @@ Vue.use(Router)
  * all roles can be accessed
  */
 export const constantRoutes = [
+  // 账号相关页面
   {
     path: '/accountLayout',
     name: 'accountLayout',
@@ -52,6 +53,7 @@ export const constantRoutes = [
       },
     ]
   },
+  // 管理端相关界面
   {
     path: '/adminLayout',
     name: 'adminLayout',
@@ -88,6 +90,7 @@ export const constantRoutes = [
       },
     ]
   },
+  // 用户端相关界面
   {
     path: '/clientLayout',
     name: 'clientLayout',
@@ -109,23 +112,11 @@ export const constantRoutes = [
       },
     ]
   },
-
-  // {
-  //   path: '/404',
-  //   name: 'errorp',
-  //   component: () => import('../views/Error-Page/404.vue')
-  // },
-
+  // 默认路径
   {
     path: '/',
     redirect: '/login'
   },
-
-  // {
-  //   path: '*',
-  //   redirect: '/404',
-  //   hidden: true
-  // },
 
 ]
 
@@ -138,13 +129,23 @@ const createRouter = () => new Router({
 })
 
 const router = createRouter();
+const LOGIN_PAGE_NAME = 'login';
+const SIGNUP_PAGE_NAME = 'signup';
+// const getLoginState = function (argument) {
+//   return sessionStorage.getItem('loginOrNot');
+// }
+const getUserInfo = function (argument) {
+  return sessionStorage.getItem('userInfo');
+}
 
 router.beforeEach((to, from, next) => {
-  let name = 'menhu_userinfo';
-  // eslint-disable-next-line no-sparse-arrays
-  let urlkey = decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null;
-  if (urlkey) {
-    sessionStorage.setItem('userinfo', urlkey);
+  // const loginState = getLoginState();
+  const userInfo = getUserInfo();
+  if(!userInfo && to.name !== LOGIN_PAGE_NAME && to.name !== SIGNUP_PAGE_NAME){
+    next({
+      name: LOGIN_PAGE_NAME // 跳转到登录页
+    })
+    return false;
   }
   next();
 })

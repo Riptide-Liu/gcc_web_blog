@@ -15,35 +15,14 @@
         min-width: 1200px;
     }
 
-    #nav {
-        padding: 30px;
-        a {
-            font-weight: bold;
-            color: #2c3e50;
-            &.router-link-exact-active {
-                color: #42b983;
-            }
-        }
-    }
-
-    .none {
-        display: none;
-    }
-
-    html,
-    body {
+    html,body{
         width: 100%;
         height: 100%;
         margin: 0;
         padding: 0;
     }
 
-    p {
-        margin: 0;
-        padding: 0;
-    }
-
-    .ant-form-item-label-left {
+    .ant-form-item-label-left{
         width: 65px !important;
     }
 
@@ -54,9 +33,4 @@
     .ant-modal-title{
         text-align: center !important;
     }
-    
-    // .ant-table-thead > tr:first-child > th{
-    //     background-color: #24243A !important;
-    //     color: #FFFFFF !important;
-    // }
 </style>

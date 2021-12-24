@@ -3,12 +3,6 @@
         <!-- 顶部按钮 -->
         <div class="topBox">
             <span style="font-size: 20px">用户列表</span>
-            <!-- <a-button
-                type="primary"
-                class="topButton"
-                @click="creatUser()">
-                新建用户
-            </a-button> -->
         </div>
         <!-- 表格框 -->
         <div class="tableBox">
@@ -28,19 +22,38 @@
                 <div class="buttonGroud"
                     slot="operation"
                     slot-scope="text, record">
+                    <a-popconfirm
+                        v-if="record.enable == 1 && record.nickname != '管理员'"
+                        title="是否封禁该用户？"
+                        ok-text="确定"
+                        cancel-text="取消"
+                        @confirm="disableUser(record)">
+                        <a-button 
+                            type="danger"
+                            size="small"
+                            style="margin-bottom: 5px">
+                            封禁
+                        </a-button>
+                    </a-popconfirm>
+                    <a-popconfirm
+                        v-if="record.enable == 0"
+                        title="是否解封封该用户？"
+                        ok-text="确定"
+                        cancel-text="取消"
+                        @confirm="enableUser(record)">
+                        <a-button 
+                            type="success"
+                            size="small"
+                            style="margin-bottom: 5px">
+                            解封
+                        </a-button>
+                    </a-popconfirm>
                     <a-button 
                         type="primary"
                         size="small"
                         style="margin-bottom: 5px"
                         @click="openEditModal(record)">
                         编辑
-                    </a-button>
-                    <a-button 
-                        type="danger"
-                        size="small"
-                        style="margin-bottom: 5px"
-                        @click="openBorrow('one',record)">
-                        封禁
                     </a-button>
                 </div>
             </a-table>
@@ -53,9 +66,10 @@
             cancelText="取消"
             width="500px"
             centered
+            destroyOnClose
             :maskClosable="false"
             :confirm-loading="setLoading"
-            @ok="addBorrow()">
+            @ok="editUserInfo()">
             <!-- 信息框 -->
             <div style="margin-bottom: 20px">
                 <span>用户ID：</span>
@@ -66,14 +80,6 @@
                 <a-form-model 
                     ref="userForm" :model="userForm" :rules="userRules" 
                     :label-col="labelCol" :wrapper-col="wrapperCol" labelAlign="left">
-                
-                    <a-form-model-item ref="username" label="用户名" prop="username">
-                        <a-input
-                            type="text"
-                            v-model="userForm.username"
-                            placeholder="用户名"
-                            style="width:300px"/>
-                    </a-form-model-item>
 
                     <a-form-model-item ref="nickname" label="昵称" prop="nickname">
                         <a-input
@@ -99,11 +105,16 @@
 
 <script>
     import Ajax from "../../api/index";
-    import _ from 'lodash';
     export default {
         name: "user",
-        components: {},
         data() {
+            // 自定义邮箱校验
+            const cheakEmail = async(rule, value, callback) => {
+                let emailRules = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+                if( !emailRules.test(this.userForm.email)){
+                    return callback(new Error('邮箱格式不正确'));
+                }
+            };
             return {
                 username: '',
                 nickname: '',
@@ -119,34 +130,12 @@
                 labelCol: { span: 4 },
                 wrapperCol: { span: 18 },
 
-                userListData: [
-                    {
-                        username: 'zhangsan.blog',
-                        nickname: 'SanZ', 
-                        email: 'zhangsan@163.com', 
-                        id: '202100000001', 
-                        level: '1',
-                        enable: '1',
-                        password: '123456', 
-                        blogNumber: '777', 
-                    },
-                    {
-                        username: 'lisi.blog',
-                        nickname: 'siL', 
-                        email: 'lisi@163.com', 
-                        id: '202100000002', 
-                        level: '1',
-                        enable: '0',
-                        password: '654321', 
-                        blogNumber: '777', 
-                    }
-                ],
+                userListData: [],
                 userListColumns: [
                     { title: '用户ID', dataIndex: 'id', key: 'id', width: 150, align: 'center' },
                     { title: '用户名', dataIndex: 'username', key: 'username', width: 150, align: 'center' },
                     { title: '昵称', dataIndex: 'nickname', key: 'nickname', width: 150, align: 'center' },
                     { title: '邮箱', dataIndex: 'email', key: 'email', width: 150, align: 'center' },
-                    // { title: '密码', dataIndex: 'password', key: 'password', width: 150, align: 'center' },
                     { title: '博文数量', dataIndex: 'blogNumber', key: 'blogNumber', width: 150, align: 'center' },
                     { 
                         title: '用户状态', 
@@ -165,31 +154,154 @@
                 ],
 
                 userForm: [],
-                userRules: [],
-
-                nowUser: [],
+                userRules: {
+                    nickname: [{ required: true, message:'昵称不能为空', trigger: "blur" }],
+                    email: [
+                        { required: true, message:'邮箱不能为空', trigger: "blur" },
+                        { required: true, validator: cheakEmail, trigger: "blur" },
+                    ],
+                },
             };
-        },
-        computed:{
-
         },
         created(){
             this.getSession()
-        },
-        mounted(){
-            
+            this.getUserList()
         },
         methods:{
             //存取session
             getSession(){
-                let {username,nickname,email,id,level,enable,} = JSON.parse(sessionStorage.getItem('userinfo'));
+                let {username,nickname,email,id,level,enable,} = JSON.parse(sessionStorage.getItem('userInfo'));
                 Object.assign(this,{username,nickname,email,id,level,enable})
-                console.log('userinfo:',this,{username,nickname,email,id,level,enable})
+            },
+            //获取用户列表
+            getUserList(){
+                this.tableLoading = true
+                Ajax.GetUserList().then(res =>{
+                    this.$_info('成功返回：',res);
+                    if(res.code == 200){
+                        //赋值
+                        this.userListData = res.data
+                        //恢复loading
+                        this.tableLoading = false;
+                    }else if(res.code == 400){
+                        //失败提示框
+                        this.$error({
+                            title: res.msg,
+                        });
+                        //恢复loading
+                        this.tableLoading = false;
+                    }
+                }).catch(err =>{
+                    this.$_error('错误信息：',err);
+                })
+            },
+            //封禁用户
+            disableUser(record){
+                //制造参数
+                let params = {
+                    "id": record.id
+                }
+                Ajax.DisableUser(params).then(res =>{
+                    this.$_info('成功返回：',res);
+                    if(res.code == 200){
+                        //成功提示框
+                        this.$success({
+                            title: res.data,
+                        });
+                        //刷新视图
+                        this.getUserList()
+                    }else if(res.code == 400){
+                        //失败提示框
+                        this.$error({
+                            title: res.msg,
+                        });
+                        //刷新视图
+                        this.getUserList()
+                    }
+                }).catch(err =>{
+                    this.$_error('错误信息：',err);
+                })
+            },
+            //解封用户
+            enableUser(record){
+                //制造参数
+                let params = {
+                    "id": record.id
+                }
+                Ajax.EnableUser(params).then(res =>{
+                    this.$_info('成功返回：',res);
+                    if(res.code == 200){
+                        //成功提示框
+                        this.$success({
+                            title: res.data,
+                        });
+                        //刷新视图
+                        this.getUserList()
+                    }else if(res.code == 400){
+                        //失败提示框
+                        this.$error({
+                            title: res.msg,
+                        });
+                        //刷新视图
+                        this.getUserList()
+                    }
+                }).catch(err =>{
+                    this.$_error('错误信息：',err);
+                })
             },
             //打开编辑弹窗
             openEditModal(record){
                 this.userEditVisible = true
                 this.userForm = record
+            },
+            //编辑用户信息
+            editUserInfo(){
+                let params = {
+                    "id": this.userForm.id,
+                    "nickname": this.userForm.nickname,
+                    "email": this.userForm.email,
+                }
+                //表单校验
+                this.$refs.userForm.validate(valid => {
+                    //成功
+                    if(valid){
+                        this.setLoading = true
+                        Ajax.EditUserInfo(params).then(res =>{
+                            this.$_info('成功返回：',res);
+                            if(res.code == 200){
+                                //成功提示框
+                                this.$success({
+                                    title: res.msg,
+                                });
+                                //恢复loading
+                                this.setLoading = false;
+                                //关闭弹窗
+                                this.userEditVisible = false
+                                //刷新视图
+                                this.getUserList()
+                            }else if(res.code == 400){
+                                //失败提示框
+                                this.$error({
+                                    title: res.msg,
+                                });
+                                //恢复loading
+                                this.setLoading = false;
+                                //刷新视图
+                                this.getUserList()
+                                return false
+                            }
+                        }).catch(err =>{
+                            this.$_error('错误信息：',err);
+                        })
+                    }
+                    //失败
+                    else{
+                        //失败提示框
+                        this.$error({
+                            title: '必填项不可为空',
+                        });
+                    }
+                });
             },
         }
     };

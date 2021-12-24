@@ -5,7 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class likeLog implements Serializable {
+public class LikeLog implements Serializable {
     private Integer userId;
     private Integer articleId;
 }

@@ -18,4 +18,12 @@
         select count(*) from gcc_web_blog.like_log
         where articleId = #{articleId};
     </select>
+
+    <select id="selectCountLike" resultType="hashmap">
+        SELECT count(articleId),articleId FROM gcc_web_blog.like_log group by articleId order by count(articleId) desc;
+    </select>
+
+    <select id="selectLikeByUserId" resultType="com.web.blog.pojo.LikeLog">
+        SELECT *,articleId FROM gcc_web_blog.like_log where userId = #{userId};
+    </select>
 </mapper>

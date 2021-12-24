@@ -1,15 +1,19 @@
 package com.web.blog.controller;
 
 import com.web.blog.common.Result;
+import com.web.blog.dto.ArticleDto;
 import com.web.blog.dto.UserDto;
 import com.web.blog.mapper.CategoryMapper;
+import com.web.blog.mapper.LikeLogMapper;
 import com.web.blog.pojo.User;
+import com.web.blog.pojo.Visitor;
 import com.web.blog.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -42,12 +46,12 @@ public class UserController {
     @PostMapping("/changePassword")
     public Result changePassword(@RequestBody UserDto userDto) {
         int result = userService.updatePassword(userDto.getId(),userDto.getOld_password(),userDto.getPassword());
-        return result == 1 ?  Result.succ("修改密码成功"):Result.fail("修改密码失败",result);
+        return result == 1 ?  Result.succ("修改密码成功"):Result.fail("修改密码失败！请检查原密码是否正确。",userDto);
     }
     @PostMapping("/editUserInfo")
     public Result editUserInfo(@RequestBody UserDto userDto) {
-        int result = userService.updateUserInfo(userDto.getId(),userDto.getUsername(),userDto.getNickname(),userDto.getEmail());
-        return result == 1 ?  Result.succ("修改用户信息成功！"):Result.fail("修改用户信息失败",result);
+        int result = userService.updateUserInfo(userDto.getId(),userDto.getNickname(),userDto.getEmail());
+        return result == 1 ?  Result.succ(200,"修改用户信息成功！",userService.selectUser(userDto.getId())):Result.fail("修改用户信息失败",result);
     }
     @PostMapping("/disableUser")
     public Result disableUser(@RequestBody UserDto userDto) {
@@ -61,7 +65,31 @@ public class UserController {
     }
     @GetMapping("/userList")
     public Result userList() {
-        List<User> result = userService.selectAllUser();
+        ArrayList<Object> result = userService.selectAllUser();
         return result.size()!=0 ?  Result.succ(200,"获取用户列表成功！",result):Result.fail("获取用户列表失败",result);
     }
+
+    @PostMapping("/updateVisitor")
+    public Result updateVisitor(@RequestBody ArticleDto articleDto) {
+        if(articleDto.getUserID() == null)
+            return Result.fail("参数错误");
+        int result = userService.updateVisitor(articleDto.getUserID());
+        return result == 1 ?  Result.succ("更新访客成功！"):Result.fail("更新访客失败",articleDto.getUserID());
+    }
+    @PostMapping("/getTodayVisitor")
+    public Result getVisitor(@RequestBody ArticleDto articleDto) {
+        if(articleDto.getUserID() == null)
+            return Result.fail("参数错误");
+        Object result = articleDto.getUserID() == 1 ? userService.selectVisitorNum():userService.selectVisitorNum(articleDto.getUserID());
+        return Result.succ(200,"获取访客成功！",result);
+    }
+    @PostMapping("/getOneWeekVisitor")
+    public Result getOneWeekVisitor(@RequestBody ArticleDto articleDto) {
+        if(articleDto.getUserID() == null)
+            return Result.fail("参数错误");
+        //ArrayList<Visitor> result = articleDto.getUserID() == 1 ? userService.selectVisitorNum():userService.selectALLDayUserVisitor(articleDto.getUserID());
+        ArrayList<Object> result = articleDto.getUserID() == 1 ? userService.selectALLDayUserVisitor() : userService.selectALLDayUserVisitor(articleDto.getUserID());
+        return Result.succ(200,"获取访客成功！",result);
+    }
+
 }

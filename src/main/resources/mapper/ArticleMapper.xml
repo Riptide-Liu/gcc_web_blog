@@ -11,7 +11,7 @@
 
     <update id="alterArticle">
         update gcc_web_blog.article
-        set content = #{content}, updateTime = now()
+        set title = #{title}, content = #{content}, topicID = #{topicID}, updateTime = now()
         where id = #{id};
     </update>
 
@@ -27,5 +27,17 @@
 
     <select id="getArticleList" resultType="com.web.blog.pojo.Article">
         select * from gcc_web_blog.article;
+    </select>
+
+    <select id="getBlogList" resultType="int">
+        select count(*) from gcc_web_blog.article where userID = #{id};
+    </select>
+
+    <select id="getArticleByUserId" resultType="com.web.blog.pojo.Article">
+        select * from gcc_web_blog.article  where userID = #{id};
+    </select>
+
+    <select id="getArticleByUserTopicId" resultType="com.web.blog.pojo.Article">
+        select * from gcc_web_blog.article  where topicID = #{topicId};
     </select>
 </mapper>

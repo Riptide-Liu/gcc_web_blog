@@ -24,7 +24,7 @@ public class CommentController {
 
     @PostMapping("/comment")
     public Result comment(@RequestBody CommentDto commentDto){
-        int result = this.commentService.comment(commentDto.getArticleId(), commentDto.getUserId(), commentDto.getContent());
+        int result = this.commentService.comment(commentDto.getArticleID(), commentDto.getUserID(), commentDto.getContent());
         return (result != 1 ? Result.fail("评论失败") : Result.succ("评论成功"));
     }
 
@@ -36,14 +36,14 @@ public class CommentController {
 
     @PostMapping("/getCommentsByArticleId")
     public Result getCommentsByArticleId(@RequestBody CommentDto commentDto){
-        ArrayList<Map<String, Object>> comments = this.commentService.getCommentsByArticleId(commentDto.getArticleId());
-        return (comments.size() == 0 ? Result.fail("获取文章评论列表失败") : Result.succ(200, "获取文章评论列表成功", comments));
+        ArrayList<Map<String, Object>> comments = this.commentService.getCommentsByArticleId(commentDto.getArticleID());
+        return  Result.succ(200, "获取文章评论列表成功", comments);
     }
 
     @PostMapping("/getCommentsByUserId")
     public Result getCommentsByUserId(@RequestBody CommentDto commentDto){
-        ArrayList<Map<String, Object>> comments = this.commentService.getCommentsByUserId(commentDto.getUserId());
-        return (comments.size() == 0 ? Result.fail("获取用户评论列表失败") : Result.succ(200, "获取用户评论列表成功", comments));
+        ArrayList<Map<String, Object>> comments = this.commentService.getCommentsByUserId(commentDto.getUserID());
+        return Result.succ(200, "获取用户评论列表成功", comments);
     }
 
 }

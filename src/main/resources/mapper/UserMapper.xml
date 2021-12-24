@@ -32,8 +32,7 @@
 
     <update id="updateUserInfo">
         update gcc_web_blog.user
-        set username = #{username},
-            nickname = #{nickname},
+        set nickname = #{nickname},
             email = #{email}
         where
             id = #{id};
@@ -56,4 +55,36 @@
     <select id="selectAllUser" resultType="com.web.blog.pojo.User">
         SELECT * FROM gcc_web_blog.user;
     </select>
+    <select id="selectUser" resultType="com.web.blog.pojo.User">
+        SELECT * FROM gcc_web_blog.user where id = #{id};
+    </select>
+
+    <update id="updateVisitor">
+        update gcc_web_blog.visitor
+        set visitor = visitor+1
+        where
+            userID = #{userID} and ymd = #{ymd};
+    </update>
+
+    <select id="selectVisitor" resultType="com.web.blog.pojo.Visitor">
+        SELECT * FROM gcc_web_blog.visitor where userID = #{userID} and ymd = #{ymd};
+    </select>
+
+    <insert id="insertVisitor">
+        insert into gcc_web_blog.visitor
+            (userID, ymd)
+        values
+            (#{userID}, #{ymd});
+    </insert>
+
+    <select id="selectUserVisitor" resultType="int">
+        SELECT visitor FROM gcc_web_blog.visitor where userID = #{userID} and ymd = #{ymd};
+    </select>
+    <select id="selectAllVisitor" resultType="object">
+        SELECT sum(visitor) FROM gcc_web_blog.visitor where ymd = #{ymd};
+    </select>
+    <select id="selectALLDayUserVisitor" resultType="com.web.blog.pojo.Visitor">
+        SELECT * FROM gcc_web_blog.visitor where userID = #{userID} ORDER BY ymd desc;
+    </select>
+
 </mapper>

@@ -2,14 +2,14 @@ package com.web.blog.controller;
 
 import com.web.blog.common.Result;
 import com.web.blog.dto.LikeLogDto;
+import com.web.blog.mapper.LikeLogMapper;
 import com.web.blog.service.LikeLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 @RestController
 @CrossOrigin
@@ -25,7 +25,7 @@ public class LikeLogController {
     @ApiOperation(value = "点赞", notes = "需求用户ID与文章ID")
     public Result grantLike(@RequestBody LikeLogDto likeLogDto){
         int result = likeLogService.insertLike(likeLogDto.getUserID(), likeLogDto.getArticleID());
-        return (result == 1 ? Result.succ("点赞成功") : Result.fail("点赞失败"));
+        return (result == 1 ? Result.succ("点赞成功") : Result.fail("点赞失败",likeLogDto));
     }
 
     @PostMapping("/revokeLike")
@@ -34,6 +34,12 @@ public class LikeLogController {
         int result = likeLogService.deleteLike(likeLogDto.getUserID(), likeLogDto.getArticleID());
         return (result == 1 ? Result.succ("取消点赞成功") : Result.fail("取消点赞失败"));
 
+    }
+
+    @GetMapping("/Top5Likes")
+    public Result Top5Likes() {
+        ArrayList<Object> list = likeLogService.Top5CountLike();
+        return list != null? Result.succ(200,"获取前五点赞数成功！",list) : Result.fail("获取前五点赞数失败！",list);
     }
 
 //    @PostMapping("/getLikes")

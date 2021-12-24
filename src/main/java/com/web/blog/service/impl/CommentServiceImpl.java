@@ -59,6 +59,7 @@ public class CommentServiceImpl implements CommentService {
             resultMap.put("id", comment.getId());
             resultMap.put("nickName", user.getNickname());
             resultMap.put("content", comment.getContent());
+            resultMap.put("article", comment.getArticleId());
             resultMap.put("createTime", comment.getCreateTime());
             resultMapList.add(resultMap);
         }
@@ -76,6 +77,7 @@ public class CommentServiceImpl implements CommentService {
             resultMap.put("id", comment.getId());
             resultMap.put("articleTitle", article.getTitle());
             resultMap.put("content", comment.getContent());
+            resultMap.put("articleId", comment.getArticleId());
             resultMap.put("createTime", comment.getCreateTime());
             resultMapList.add(resultMap);
         }

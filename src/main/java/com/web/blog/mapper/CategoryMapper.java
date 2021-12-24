@@ -34,4 +34,10 @@ public interface CategoryMapper {
 
     //根据分类名查询
     Integer selectByTopic(@Param("topic") String topic);
+
+    //根据父id查询
+    List<Category> SelectByParentId(@Param("parentId") Integer parentId);
+
+    //根据id查询
+    Category selectById(@Param("id") Integer id);
 }

@@ -1,15 +1,15 @@
 package com.web.blog.service.impl;
 
+import com.web.blog.mapper.ArticleMapper;
 import com.web.blog.mapper.UserMapper;
 import com.web.blog.pojo.User;
+import com.web.blog.pojo.Visitor;
 import com.web.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -18,6 +18,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     public void setDdDataMapper(UserMapper userMapper) {
         this.userMapper = userMapper;
+    }
+    private ArticleMapper articleMapper;
+    @Autowired
+    public void setArticleMapper(ArticleMapper articleMapper) {
+        this.articleMapper = articleMapper;
     }
 
     @Override
@@ -48,8 +53,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int updateUserInfo(Integer id, String username, String nickname, String email) {
-        int result = userMapper.updateUserInfo(id,username,nickname,email);
+    public int updateUserInfo(Integer id, String nickname, String email) {
+        int result = userMapper.updateUserInfo(id,nickname,email);
         return result;
     }
 
@@ -76,11 +81,91 @@ public class UserServiceImpl implements UserService {
             result.put("level",item.getLevel());
             result.put("enable",item.getEnable());
             result.put("email",item.getEmail());
-            
-            result.put("blogNumber",item.getId());
+            result.put("blogNumber",articleMapper.getBlogList(item.getId()));
             resultList.add(result);
         }
 
         return resultList;
+    }
+
+    @Override
+    public User selectUser(Integer id) {
+        return userMapper.selectUser(id);
+    }
+
+    Date date = new Date();
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    String ymd = simpleDateFormat.format(date);
+    @Override
+    public int updateVisitor(Integer userID) {
+        if(userMapper.selectVisitor(userID,ymd) == null)
+            userMapper.insertVisitor(userID,ymd);
+        return userMapper.updateVisitor(userID,ymd);
+    }
+
+    @Override
+    public Visitor selectVisitor(Integer userID, String ymd) {
+        return null;
+    }
+
+    @Override
+    public int insertVisitor(Integer userID, String ymd) {
+        return 0;
+    }
+
+    @Override
+    public int selectVisitorNum(Integer userID) {
+        if(userMapper.selectVisitor(userID,ymd) == null)
+            userMapper.insertVisitor(userID,ymd);
+        return userMapper.selectUserVisitor(userID,ymd);
+    }
+
+    @Override
+    public Object selectVisitorNum() {
+        if(userMapper.selectVisitor(1,ymd) == null)
+            userMapper.insertVisitor(1,ymd);
+        Object num = userMapper.selectAllVisitor(ymd);
+        return num;
+    }
+
+    @Override
+    public ArrayList<Object> selectALLDayUserVisitor(Integer userID) {
+        if(userMapper.selectVisitor(userID,ymd) == null)
+            userMapper.insertVisitor(userID,ymd);
+        int oneWeek = 7;
+        List<Object> list = userMapper.selectALLDayUserVisitor(userID);
+        ArrayList<Object> resultList = new ArrayList<>();
+        for (Object visitor : list){
+            if(oneWeek == 0) break;
+            resultList.add(visitor);
+            oneWeek --;
+        }
+        Collections.reverse(resultList);
+        return resultList;
+    }
+
+    @Override
+    public ArrayList<Object> selectALLDayUserVisitor() {
+        if(userMapper.selectVisitor(1,ymd) == null)
+            userMapper.insertVisitor(1,ymd);
+        int oneWeek = 7;
+        ArrayList<Object> result = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        int year =  calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH)+1;
+        int day = calendar.get(Calendar.DATE);
+        for (int i=0;i<oneWeek;i++){
+            Map<String, Object> map = new HashMap<>();
+            String n_ymd = year + "-" + month + "-" + day + "";
+            if(userMapper.selectAllVisitor(n_ymd) == null)
+                continue;
+            Object visitor = userMapper.selectAllVisitor(n_ymd);
+            map.put("ymd",n_ymd);
+            map.put("visitor",visitor);
+            result.add(map);
+            day --;
+        }
+        Collections.reverse(result);
+        return result;
     }
 }

@@ -1,11 +1,11 @@
 package com.web.blog.service;
 
 import com.web.blog.pojo.User;
+import com.web.blog.pojo.Visitor;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public interface UserService {
     //登录
@@ -23,7 +23,6 @@ public interface UserService {
             , @Param("password") String password);
     //修改个人信息
     int updateUserInfo(@Param("id") Integer id
-            , @Param("username") String username
             , @Param("nickname") String nickname
             , @Param("email") String email);
     //禁用
@@ -32,4 +31,24 @@ public interface UserService {
     int enableUser(@Param("id") Integer id);
     //获取用户列表
     ArrayList<Object> selectAllUser();
+    //获取用户信息
+    User selectUser(@Param("id") Integer id);
+
+    //访客量
+    int updateVisitor(@Param("userID") Integer userID);
+    //查询访客
+    Visitor selectVisitor(@Param("userID") Integer userID,
+                          @Param("ymd") String ymd);
+    //创建访客表
+    int insertVisitor(@Param("userID") Integer userID,
+                      @Param("ymd") String ymd);
+
+    //查询单用户访客量
+    int selectVisitorNum(@Param("userID") Integer userID);
+    //查询所有用户访客量
+    Object selectVisitorNum();
+    //获取一周单用户访问量
+    ArrayList<Object> selectALLDayUserVisitor(@Param("userID") Integer userID);
+    //获取所有日期访问量
+    ArrayList<Object> selectALLDayUserVisitor();
 }

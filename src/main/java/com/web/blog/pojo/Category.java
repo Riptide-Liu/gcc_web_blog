@@ -15,4 +15,5 @@ public class Category implements Serializable {
     private Integer parentId; //父id
     private String parentName; //父名
     private Integer topicLevel;   //层级
+    private Integer userId;
 }

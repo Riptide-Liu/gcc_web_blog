@@ -40,4 +40,12 @@
     <select id="selectByTopic" resultType="integer">
         SELECT count(*) FROM gcc_web_blog.category where topic = #{topic};
     </select>
+
+    <select id="SelectByParentId" resultType="com.web.blog.pojo.Category">
+        SELECT * FROM gcc_web_blog.category where parentId = #{parentId};
+    </select>
+
+    <select id="selectById" resultType="com.web.blog.pojo.Category">
+        SELECT * FROM gcc_web_blog.category where id = #{id};
+    </select>
 </mapper>

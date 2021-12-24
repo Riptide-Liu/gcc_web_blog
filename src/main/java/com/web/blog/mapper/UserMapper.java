@@ -1,6 +1,7 @@
 package com.web.blog.mapper;
 
 import com.web.blog.pojo.User;
+import com.web.blog.pojo.Visitor;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -27,7 +28,6 @@ public interface UserMapper {
             , @Param("password") String password);
     //修改个人信息
     int updateUserInfo(@Param("id") Integer id
-            , @Param("username") String username
             , @Param("nickname") String nickname
             , @Param("email") String email);
     //确认密码
@@ -39,4 +39,27 @@ public interface UserMapper {
     int enableUser(@Param("id") Integer id);
     //获取用户列表
     List<User> selectAllUser();
+    //获取用户信息
+    User selectUser(@Param("id") Integer id);
+
+    //访客量
+    int updateVisitor(@Param("userID") Integer userID,
+                      @Param("ymd") String ymd);
+    //查询访客
+    Visitor selectVisitor(@Param("userID") Integer userID,
+                          @Param("ymd") String ymd);
+    //创建访客表
+    int insertVisitor(@Param("userID") Integer userID,
+                      @Param("ymd") String ymd);
+    //查询当日单用户访客量
+    int selectUserVisitor(@Param("userID") Integer userID,
+                          @Param("ymd") String ymd);
+    //查询当日所有用户访客量
+    Object selectAllVisitor(@Param("ymd") String ymd);
+
+    //获取单用户所有日期访问量
+    List<Object> selectALLDayUserVisitor(@Param("userID") Integer userID);
+
+    //获取所有日期访问量
+
 }

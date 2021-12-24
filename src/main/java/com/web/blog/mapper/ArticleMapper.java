@@ -18,7 +18,9 @@ public interface ArticleMapper {
 
     // 修改
     int alterArticle(@Param("id") Integer id,
-                     @Param("content") String content);
+                     @Param("title") String title,
+                     @Param("content") String content,
+                     @Param("topicID") Integer topicID);
 
     // 删除
     int deleteArticle(@Param("id") Integer id);
@@ -28,4 +30,13 @@ public interface ArticleMapper {
 
     // 获取文章列表
     List<Article> getArticleList();
+
+    // 根据用户获取文章数量
+    int getBlogList(@Param("id") Integer id);
+
+    // 根据用户获取文章
+    List<Article> getArticleByUserId(@Param("id") Integer id);
+
+    // 根据分类获取文章
+    List<Article> getArticleByUserTopicId(@Param("topicId") Integer topicId);
 }

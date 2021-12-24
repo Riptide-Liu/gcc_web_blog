@@ -21,6 +21,11 @@
 
     <select id="selectCommentsByUserId" resultType="com.web.blog.pojo.Comment">
         select * from gcc_web_blog.comment
-        where userId = #{userId};
+        where userId = #{userId}
+        order by createTime desc;
+    </select>
+
+    <select id="selectCommentNumber" resultType="int">
+       SELECT count(*) FROM gcc_web_blog.comment where articleId = #{articleId};
     </select>
 </mapper>

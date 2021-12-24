@@ -24,4 +24,7 @@ public interface CommentMapper {
 
     // 获取对应用户评论列表
     ArrayList<Comment> selectCommentsByUserId(@Param("userId") Integer userId);
+
+    //获取评论数
+    int selectCommentNumber(@Param("articleId") Integer articleId);
 }

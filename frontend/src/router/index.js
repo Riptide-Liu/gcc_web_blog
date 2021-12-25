@@ -131,15 +131,11 @@ const createRouter = () => new Router({
 const router = createRouter();
 const LOGIN_PAGE_NAME = 'login';
 const SIGNUP_PAGE_NAME = 'signup';
-// const getLoginState = function (argument) {
-//   return sessionStorage.getItem('loginOrNot');
-// }
 const getUserInfo = function (argument) {
   return sessionStorage.getItem('userInfo');
 }
 
 router.beforeEach((to, from, next) => {
-  // const loginState = getLoginState();
   const userInfo = getUserInfo();
   if(!userInfo && to.name !== LOGIN_PAGE_NAME && to.name !== SIGNUP_PAGE_NAME){
     next({

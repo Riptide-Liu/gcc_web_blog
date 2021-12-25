@@ -1,4 +1,4 @@
-# moursering_pc
+# GCCBLOG
 
 ## Project setup
 ```

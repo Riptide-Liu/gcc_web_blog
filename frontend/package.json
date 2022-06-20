@@ -9,15 +9,12 @@
   },
   "dependencies": {
     "ant-design-vue": "^1.6.0",
-    "aws-sdk": "^2.546.0",
     "axios": "^0.19.0",
     "babel-preset-env": "^1.7.0",
     "core-js": "^2.6.5",
     "countup.js": "^2.0.8",
-    "crypto-js": "^3.1.9-1",
     "echarts": "^4.6.0",
     "element-ui": "2.11.1",
-    "lodash": "^4.17.15",
     "loggerjs": "^0.1.0",
     "mavon-editor": "^2.10.1",
     "popper.js": "^1.16.0",
@@ -26,7 +23,6 @@
     "vue-countup-v2": "^4.0.0",
     "vue-logger": "0.0.4",
     "vue-router": "^3.0.3",
-    "vue-video-player": "^5.0.2",
     "vuejs-logger": "1.5.3",
     "vuex": "^3.0.1",
     "winston": "^3.2.1"

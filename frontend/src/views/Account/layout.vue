@@ -1,65 +1,44 @@
 <template>
-    <div class="Login">
+    <div class="AccountLayout">
         <!-- 背景框 -->
         <div class="background">
-            <div class="box">
+            <!-- 主体框 -->
+            <div class="mainBox">
                 <!-- Logo框 -->
                 <div class="logoBox">
-                    <img 
-                        src="../../assets/Images/login_logo.png"
-                        style="width: 150px; height: 150px">
-                    <span class="logoText">GCCBlog</span>
+                    <img src="../../assets/Images/logo.png"
+                        style="width: 200px; height: 200px">
                 </div>
-                <!-- 表单背景框 -->
+                <!-- 表单框 -->
                 <div class="formBox">
                     <router-view></router-view>
                 </div>
             </div>
         </div>
-        
     </div>
 </template>
 
 <script>
-    import Ajax from "../../api/index";
     export default {
-        name:'login',
-        data() {
-            return {
-                
-            };
-        },
-        computed:{
-            
-        },
-        created(){
-            
-        },
-        mounted(){
-
-        },
-        methods:{
-            
-        }
+        name:'accountlayout',
     }
 </script>
 
 <style lang="scss" scoped>
-    .Login{
+    .AccountLayout{
         width: 100%;
         height: 100%;
         margin: 0;
         padding: 0;
+        overflow: auto;
         .background{
             width: 100%;
             height: 100%;
-            background: url(../../assets/Images/Start_page@3x.png) no-repeat;
+            background: url(../../assets/Images/account_background.png) no-repeat;
             background-size: cover;
             background-attachment: fixed;
             background-position: center center;
-            
-            // background: #c8d4dc;
-            .box{
+            .mainBox{
                 position: absolute;
                 margin-top: 50px;
                 left: 50%;
@@ -67,20 +46,11 @@
                 .logoBox{
                     text-align: center;
                     margin: 20px 0;
-                    .logoText{
-                        display: block;
-                        font-size: 30px;
-                        font-weight: bold;
-                        color: rgba(0,0,0,0.3),#232f3d;
-                    }
                 }
                 .formBox{
-                    width: 350px;
-                    padding: 50px;
+                    width: 313px;
+                    padding: 30px;
                     background-color: rgba(0,0,0,0.3);
-                    .signUpBox{
-                        margin-top: 10px
-                    }
                 }
             }
         }

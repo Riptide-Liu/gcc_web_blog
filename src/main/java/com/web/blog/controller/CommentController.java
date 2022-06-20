@@ -24,7 +24,8 @@ public class CommentController {
 
     @PostMapping("/comment")
     public Result comment(@RequestBody CommentDto commentDto){
-        int result = this.commentService.comment(commentDto.getArticleID(), commentDto.getUserID(), commentDto.getContent());
+        int result = this.commentService.comment(commentDto.getArticleID(),
+                commentDto.getUserID(), commentDto.getContent());
         return (result != 1 ? Result.fail("评论失败") : Result.succ("评论成功"));
     }
 

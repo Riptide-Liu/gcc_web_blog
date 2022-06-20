@@ -38,7 +38,9 @@ public class UserController {
     }
     @PostMapping("/register")
     public Result userRegister(@RequestBody UserDto userDto) {
-        int result = userService.insertUser(userDto.getUsername(),userDto.getPassword(),userDto.getNickname(),userDto.getEmail());
+        int result = userService.insertUser(userDto.getUsername(),
+                userDto.getPassword(),
+                userDto.getNickname(),userDto.getEmail());
         if(result == 2)
             return Result.fail("该用户名已经被注册！");
         return result == 1 ?  Result.succ(200,"注册成功",result):Result.fail("注册失败",result);
@@ -51,7 +53,8 @@ public class UserController {
     @PostMapping("/editUserInfo")
     public Result editUserInfo(@RequestBody UserDto userDto) {
         int result = userService.updateUserInfo(userDto.getId(),userDto.getNickname(),userDto.getEmail());
-        return result == 1 ?  Result.succ(200,"修改用户信息成功！",userService.selectUser(userDto.getId())):Result.fail("修改用户信息失败",result);
+        return result == 1 ?  Result.succ(200,"修改用户信息成功！",
+                userService.selectUser(userDto.getId())):Result.fail("修改用户信息失败",result);
     }
     @PostMapping("/disableUser")
     public Result disableUser(@RequestBody UserDto userDto) {
@@ -80,7 +83,8 @@ public class UserController {
     public Result getVisitor(@RequestBody ArticleDto articleDto) {
         if(articleDto.getUserID() == null)
             return Result.fail("参数错误");
-        Object result = articleDto.getUserID() == 1 ? userService.selectVisitorNum():userService.selectVisitorNum(articleDto.getUserID());
+        Object result = articleDto.getUserID() == 1 ?
+                userService.selectVisitorNum():userService.selectVisitorNum(articleDto.getUserID());
         return Result.succ(200,"获取访客成功！",result);
     }
     @PostMapping("/getOneWeekVisitor")
@@ -88,7 +92,8 @@ public class UserController {
         if(articleDto.getUserID() == null)
             return Result.fail("参数错误");
         //ArrayList<Visitor> result = articleDto.getUserID() == 1 ? userService.selectVisitorNum():userService.selectALLDayUserVisitor(articleDto.getUserID());
-        ArrayList<Object> result = articleDto.getUserID() == 1 ? userService.selectALLDayUserVisitor() : userService.selectALLDayUserVisitor(articleDto.getUserID());
+        ArrayList<Object> result = articleDto.getUserID() == 1 ?
+                userService.selectALLDayUserVisitor() : userService.selectALLDayUserVisitor(articleDto.getUserID());
         return Result.succ(200,"获取访客成功！",result);
     }
 

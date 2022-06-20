@@ -34,7 +34,8 @@ public class ArticleController {
 
     @PostMapping("/alterArticle")
     public Result alterArticle(@RequestBody ArticleDto articleDto){
-        int result = this.articleService.alterArticle(articleDto.getId(),articleDto.getTitle(),articleDto.getContent(),articleDto.getTopicID());
+        int result = this.articleService.alterArticle(articleDto.getId(),
+                articleDto.getTitle(),articleDto.getContent(),articleDto.getTopicID());
         return (result != 1 ? Result.fail("修改失败") : Result.succ("修改成功"));
     }
 

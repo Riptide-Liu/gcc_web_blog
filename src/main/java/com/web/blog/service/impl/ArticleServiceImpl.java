@@ -77,7 +77,9 @@ public class ArticleServiceImpl implements ArticleService {
         ArrayList<Object> resultList = new ArrayList<>();
         String content = "";
         for (Article article : parentId == null ? articleMapper.getArticleList():articleMapper.getArticleByUserTopicId(parentId)){
+
             String _content = article.getContent();
+            System.out.println(_content.length());
             if (_content.length() < 50){
                 content = _content;
             }

@@ -24,7 +24,8 @@ public class CategoryController {
     //创建栏目
     @PostMapping("/addCategory")
     public Result addCategory(@RequestBody CategoryDto categoryDto){
-        int result = categoryService.insertCategory(categoryDto.getTopic(),categoryDto.getParentId(),categoryDto.getTopicLevel());
+        int result = categoryService.insertCategory(categoryDto.getTopic(),
+                categoryDto.getParentId(),categoryDto.getTopicLevel());
         if(result == 2)
             return Result.fail("创建失败！已存在分类。");
         return result == 1 ? Result.succ(200,"创建成功！",result) : Result.fail("创建失败！",result);
@@ -33,7 +34,8 @@ public class CategoryController {
     //修改栏目
     @PostMapping("/editCategory")
     public Result editCategory(@RequestBody CategoryDto categoryDto){
-        int result = categoryService.updateCategory(categoryDto.getId(),categoryDto.getTopic(),categoryDto.getParentId(),categoryDto.getTopicLevel());
+        int result = categoryService.updateCategory(categoryDto.getId(),
+                categoryDto.getTopic(),categoryDto.getParentId(),categoryDto.getTopicLevel());
         return result == 1 ? Result.succ(200,"修改成功！",result) : Result.fail("修改失败！",result);
     }
 
